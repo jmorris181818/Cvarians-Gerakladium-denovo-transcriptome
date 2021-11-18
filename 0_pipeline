@@ -131,11 +131,6 @@ perl /annotatingTranscriptomes/dedupTranscriptome.pl left=R1_r1.trim.cat right=R
 #PAIRED: kept 50,524,403 out of 133,644,264
 #UNPAIRED: kept 8,705,889 out of 62,605,944
 
-#Carterio
-
-#PAIRED: kept 32491751 out of 152365270
-#UNPAIRED: kept 2973959 out of 44629903
-
 
 ##### putting reads together with suffixes /1 (for left and unpaired ones) and /2 for right reads: labs.job
 
@@ -166,19 +161,8 @@ seq_stats.pl Trinity.fasta
 #0 Mb of Ns. (0 bp, 0%)
 #-------------------------
 
-#Carterio 
 
-#Trinity.fasta
-#-------------------------
-#231571 sequences.
-#1265 average length.
-#26809 maximum length.
-#179 minimum length.
-#50 = 2980
-#293 Mb altogether (292982826 bp).
-#0 ambiguous Mb. (0 bp, 0%)
-#0 Mb of Ns. (0 bp, 0%)
-#-------------------------
+
 
 #########################################################
 
