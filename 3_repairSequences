@@ -1,17 +1,17 @@
-#####cat r1.trim r1_l2.trim > r1.trim.cat.   #### Shouldn't matter for us since our data comes from 1 Lane
-#####cat r2.trim r2_l2.trim > r2.trim.cat
+##cat r1.trim > r1.trim.cat  
+##cat r2.trim > r2.trim.cat
 
-#####count concatinated reads. Submit as job with PBS wrapper. Counts will appear in the generated output file.
+##count concatinated reads. Submit as job with PBS wrapper. Counts will appear in the generated output file.
 
-#####grep @D8Q r1.trim.cat | wc -l
-#####grep @D8Q r2.trim.cat | wc -l
+##grep @D8Q r1.trim.cat | wc -l
+##grep @D8Q r2.trim.cat | wc -l
 
-######R1 and R2 counts for Cliona:
+##R1 and R2 counts for Cliona:
 
-######Cliona R1.cat - 171200113
-######Cliona R2.cat - 158694359
+##Cliona R1.cat - 171200113 
+##Cliona R2.cat - 158694359
 
-########## Re-pairing sequences:
+## Re-pairing sequences:
 # At this point you may have to make more space in your working directory as each step nearly doubles the data. 
 
 
