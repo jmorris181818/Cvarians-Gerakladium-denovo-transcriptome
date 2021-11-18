@@ -46,104 +46,10 @@ Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     #10,581,948
 #removing reads with greater than 9 sequential "As", and removing Truseq adaptors, discarding reads shorter than 50 nucleotides
 #retain only reads with minimum quality score of 20 over at least 80% of the read
 
-#Cliona1
+#Ex) Cliona1
 cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
 cat Cliona_1_S1_L001_R2_001.fastq > Cliona1-R2.fastq
 
-
-
-
-#Cliona1
-cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
-cat Cliona_1_S1_L001_R2_001.fastq > Cliona1-R2.fastq
-
-#Cliona4
-cat Cliona_4_S2_L001_R1_001.fastq > Cliona4-R1.fastq
-cat Cliona_4_S2_L001_R2_001.fastq > Cliona4-R2.fastq
-
-#Cliona5
-cat Cliona_5_S3_L001_R1_001.fastq > Cliona5-R1.fastq
-cat Cliona_5_S3_L001_R2_001.fastq > Cliona5-R2.fastq
-
-#Cliona6
-cat Cliona_6_S4_L001_R1_001.fastq > Cliona6-R1.fastq
-cat Cliona_6_S4_L001_R2_001.fastq > Cliona6-R2.fastq
-
-#Cliona8
-cat Cliona_8_S6_L001_R1_001.fastq > Cliona8-R1.fastq
-cat Cliona_8_S6_L001_R2_001.fastq > Cliona8-R2.fastq
-
-#Cliona9
-cat Cliona_9_S7_L001_R1_001.fastq > Cliona9-R1.fastq
-cat Cliona_9_S7_L001_R2_001.fastq > Cliona9-R2.fastq
-
-#Cliona10
-cat Cliona_10_S8_L001_R1_001.fastq > Cliona10-R1.fastq
-cat Cliona_10_S8_L001_R2_001.fastq > Cliona10-R2.fastq
-
-#Cliona17
-cat Cliona_17_S14_L001_R1_001.fastq > Cliona17-R1.fastq
-cat Cliona_17_S14_L001_R2_001.fastq > Cliona17-R2.fastq
-
-#Cliona21
-cat Cliona_21_S18_L001_R1_001.fastq > Cliona21-R1.fastq
-cat Cliona_21_S18_L001_R2_001.fastq > Cliona21-R2.fastq
-
-#Cliona22
-cat Cliona_22_S19_L001_R1_001.fastq > Cliona22-R1.fastq
-cat Cliona_22_S19_L001_R2_001.fastq > Cliona22-R2.fastq
-
-#Cliona23
-cat Cliona_23_S20_L001_R1_001.fastq > Cliona23-R1.fastq
-cat Cliona_23_S20_L001_R2_001.fastq > Cliona23-R2.fastq
-
-#ClionaRe1
-cat Cliona_Redo1_S22_L001_R1_001.fastq > ClionaRe1-R1.fastq
-cat Cliona_Redo1_S22_L001_R2_001.fastq > ClionaRe1-R2.fastq
-
-#ClionaRe2
-cat Cliona_Redo2_S21_L001_R1_001.fastq > ClionaRe2-R1.fastq
-cat Cliona_Redo2_S21_L001_R2_001.fastq > ClionaRe2-R2.fastq
-
-#ClionaRe3
-cat Cliona_Redo3_S5_L001_R1_001.fastq > ClionaRe3-R1.fastq
-cat Cliona_Redo3_S5_L001_R2_001.fastq > ClionaRe3-R2.fastq
-
-#ClionaRe4
-cat Cliona_Redo4_S9_L001_R1_001.fastq > ClionaRe4-R1.fastq
-cat Cliona_Redo4_S9_L001_R2_001.fastq > ClionaRe4-R2.fastq
-
-#ClionaRe5
-cat Cliona_Redo5_S16_L001_R1_001.fastq > ClionaRe5-R1.fastq
-cat Cliona_Redo5_S16_L001_R2_001.fastq > ClionaRe5-R2.fastq
-
-#ClionaRe7
-cat Cliona_Redo7_S17_L001_R1_001.fastq > ClionaRe7-R1.fastq
-cat Cliona_Redo7_S17_L001_R2_001.fastq > ClionaRe7-R2.fastq
-
-#ClionaRe8
-cat Cliona_Redo8_S13_L001_R1_001.fastq > ClionaRe8-R1.fastq
-cat Cliona_Redo8_S13_L001_R2_001.fastq > ClionaRe8-R2.fastq
-
-#ClionaRe9
-cat Cliona_Redo9_S15_L001_R1_001.fastq > ClionaRe9-R1.fastq
-cat Cliona_Redo9_S15_L001_R2_001.fastq > ClionaRe9-R2.fastq
-
-#ClionaRe10
-cat Cliona_Redo10_S10_L001_R1_001.fastq > ClionaRe10-R1.fastq
-cat Cliona_Redo10_S10_L001_R2_001.fastq > ClionaRe10-R2.fastq
-
-#ClionaRe11
-cat Cliona_Redo11_S11_L001_R1_001.fastq > ClionaRe11-R1.fastq
-cat Cliona_Redo11_S11_L001_R2_001.fastq > ClionaRe11-R2.fastq
-
-#ClionaRe12
-cat Cliona_Redo12_S23_L001_R1_001.fastq > ClionaRe12-R1.fastq
-cat Cliona_Redo12_S23_L001_R2_001.fastq > ClionaRe12-R2.fastq
-
-#ClionaRe13
-cat Cliona_Redo13_S12_L001_R1_001.fastq > ClionaRe13-R1.fastq
-cat Cliona_Redo13_S12_L001_R2_001.fastq > ClionaRe13-R2.fastq
 
 
 
