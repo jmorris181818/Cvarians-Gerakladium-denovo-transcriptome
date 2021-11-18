@@ -17,30 +17,30 @@ git clone https://github.com/Eli-Meyer/transcriptome_utilities
 gunzip Cliona_*.fastq.gz 
  
 
-#####to count reads you will see an @ line for each read - it will start with some letter designation, just use that, in this case: @A0
-#####then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest. 
+#to count reads you will see an @ line for each read - it will start with some letter designation, just use that, in this case: @A0
+#then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest. 
 
 cat yourfilename.fastq | grep @A0 | wc -l
 
-Ex) cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l     #10,581,948
-Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     #10,581,948
+Ex) cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l    
+Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     
 
-#####Cliona - #104,183,967# (lane 1, R1); #104,889,814# (lane 1, R2)
-#####there will also be ones for R2 lanes 1 and 2 I, I just did not note them here
+#####Cliona - 10,581,948 (R1); 10,581,948 (R2)
+
 
 #############Do we need to do this individually for each sample ID????
-#Cliona 
-#L1R1: #104183967#
-#L1R2: #104184006#
+#Cliona1 
+#R1: #10,581,948
+#R2: #10,581,948
 
-#total: #418,147,642#
+########total: #418,147,642#
 
 
 
-######Quality Trimming
+##Quality Trimming
 # trimming adaptors and quality filtering
-#removing reads with greater than 9 sequential "As", and removing Truseq adaptors, discarding reads shorter than 50 nucleotides
-#retain only reads with minimum quality score of 20 over at least 80% of the read
+# removing reads with greater than 9 sequential "As", and removing Truseq adaptors, discarding reads shorter than 50 nucleotides
+# retain only reads with minimum quality score of 20 over at least 80% of the read
 
 #Ex) Cliona1
 cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
@@ -57,13 +57,11 @@ export L1_R2reads=STR667_Cliona_GTGAAA_L001_R2_001.fastq
 
 
 
-#cliona 
+#Cliona
 cat R1reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r1.trim
-
 cat R2reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r2.trim
 
 #Counting reads remaining after quality Trim. Check line header using head r1.trim. Mine was @DQ8. Submit the script below as 'count_reads.job'
-
 grep @D8Q r1.trim | wc -l
 grep @D8Q r2.trim | wc -l
 
@@ -72,38 +70,32 @@ grep @D8Q r2.trim | wc -l
 
 #Trimmed counts for Cliona:
 
-#Cliona R1, L1 - 85342467
-#Cliona R2, L1 - 79197805 (total = 164,540,270)
-#Cliona R1, L2 - 85857646
-#Cliona R2, L2 - 79496554 (total = 165,354,200)
-
-#Carterio
-R1 -180036660
-R2 -169323783
-
-#combine, the two lanes together for R1 and R2 
+#####Cliona R1, L1 - 85342467
+#####Cliona R2, L1 - 79197805 (total = 164,540,270)
+#####Cliona R1, L2 - 85857646
+#####Cliona R2, L2 - 79496554 (total = 165,354,200)
 
 
-cat r1.trim r1_l2.trim > r1.trim.cat
-cat r2.trim r2_l2.trim > r2.trim.cat
 
-#count concatinated reads. Submit as job with PBS wrapper. Counts will appear in the generated output file.
+#####cat r1.trim r1_l2.trim > r1.trim.cat.   #### Shouldn't matter for us since our data comes from 1 Lane
+#####cat r2.trim r2_l2.trim > r2.trim.cat
 
-grep @D8Q r1.trim.cat | wc -l
-grep @D8Q r2.trim.cat | wc -l
+#####count concatinated reads. Submit as job with PBS wrapper. Counts will appear in the generated output file.
 
-#R1 and R2 counts for Cliona:
+#####grep @D8Q r1.trim.cat | wc -l
+#####grep @D8Q r2.trim.cat | wc -l
 
-#Cliona R1.cat - 171200113
-#Cliona R2.cat - 158694359
+######R1 and R2 counts for Cliona:
+
+######Cliona R1.cat - 171200113
+######Cliona R2.cat - 158694359
 
 ########## Re-pairing sequences:
 # At this point you may have to make more space in your working directory as each step nearly doubles the data. 
 
 perl /annotatingTranscriptomes/rePair.pl r1.trim.cat r2.trim.cat
 
-##carterio
-perl /annotatingTranscriptomes/rePair.pl r1.trim.cat r2.trim.cat
+
 
 #How many reads are paired and unpaired after quality trimming? qsub the following count jobscript with a PBS wrapper.
 
