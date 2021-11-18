@@ -27,6 +27,30 @@ grep @D8Q Unp_r1.trim.cat_r2.trim.cat | wc -l
 #R2_Cliona 133644264
 #UnPair_Cliona 62605944
 
+#####Deduplicating transcriptome
+#Removes duplicated reads prior to transcriptome assembly (PCR duplicates).
+#Input must be fastq files, trimmed, quality-filtered and sorted into left, right and unpaired reads.
+#Identifies duplicates based on identity of bases 5-30 on both left and right ends (if paired reads are supplied)or in unpaired reads.
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=R1_r1.trim.cat right=R2_r2.trim.cat unp=Unp_r1.trim.cat_r2.trim.cat
+
+#How many dedup reads left? Read number should decrease again
+#NOTE: these are the values reported in the manuscript
+#The values below are reported in the output file after the script is done. No need to run a counting script.
+
+#Cliona
+#PAIRED: kept 50,524,403 out of 133,644,264
+#UNPAIRED: kept 8,705,889 out of 62,605,944
+
+##### putting reads together with suffixes /1 (for left and unpaired ones) and /2 for right reads: labs.job
+
+cat R1_r1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > R1p_suf1.fastq && cat Unp_r1.trim.cat_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> R1p_suf1.fastq
+cat R2_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > R2p_suf2.fastq 
+
+
+
+
+
 
 
 
@@ -44,6 +68,7 @@ grep @A0 Cliona1_R1.trim.cat | wc -l
 grep @A0 Cliona1_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona1_R1.trim.cat right=Cliona1_R2.trim.cat unp=Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat
 
 
 
@@ -61,6 +86,7 @@ grep @A0 Cliona4_R1.trim.cat | wc -l
 grep @A0 Cliona4_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona4_R1.trim.cat_Cliona4_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona4_R1.trim.cat right=Cliona4_R2.trim.cat unp=Unp_Cliona4_R1.trim.cat_Cliona4_R2.trim.cat
 
 
 
@@ -80,6 +106,8 @@ grep @A0 Cliona5_R1.trim.cat | wc -l
 grep @A0 Cliona5_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona5_R1.trim.cat_Cliona5_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona5_R1.trim.cat right=Cliona5_R2.trim.cat unp=Unp_Cliona5_R1.trim.cat_Cliona5_R2.trim.cat
+
 
 
 
@@ -98,6 +126,8 @@ perl /annotatingTranscriptomes/rePair.pl Cliona6_R1.trim.cat Cliona6_R2.trim.cat
 grep @A0 Cliona6_R1.trim.cat | wc -l
 grep @A0 Cliona6_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona6_R1.trim.cat_Cliona6_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona6_R1.trim.cat right=Cliona6_R2.trim.cat unp=Unp_Cliona6_R1.trim.cat_Cliona6_R2.trim.cat
 
 
 
@@ -119,6 +149,7 @@ grep @A0 Cliona8_R1.trim.cat | wc -l
 grep @A0 Cliona8_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona8_R1.trim.cat_Cliona8_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona8_R1.trim.cat right=Cliona8_R2.trim.cat unp=Unp_Cliona8_R1.trim.cat_Cliona8_R2.trim.cat
 
 
 
@@ -140,6 +171,8 @@ grep @A0 Cliona9_R1.trim.cat | wc -l
 grep @A0 Cliona9_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona9_R1.trim.cat_Cliona9_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona9_R1.trim.cat right=Cliona9_R2.trim.cat unp=Unp_Cliona9_R1.trim.cat_Cliona9_R2.trim.cat
+
 
 
 
@@ -159,6 +192,7 @@ grep @A0 Cliona10_R1.trim.cat | wc -l
 grep @A0 Cliona10_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona10_R1.trim.cat_Cliona10_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona10_R1.trim.cat right=Cliona10_R2.trim.cat unp=Unp_Cliona10_R1.trim.cat_Cliona10_R2.trim.cat
 
 
 
@@ -177,6 +211,8 @@ perl /annotatingTranscriptomes/rePair.pl Cliona17_R1.trim.cat Cliona17_R2.trim.c
 grep @A0 Cliona17_R1.trim.cat | wc -l
 grep @A0 Cliona17_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona17_R1.trim.cat_Cliona17_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona17_R1.trim.cat right=Cliona17_R2.trim.cat unp=Unp_Cliona17_R1.trim.cat_Cliona17_R2.trim.cat
 
 
 
@@ -197,6 +233,8 @@ grep @A0 Cliona21_R1.trim.cat | wc -l
 grep @A0 Cliona21_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona21_R1.trim.cat_Cliona21_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona21_R1.trim.cat right=Cliona21_R2.trim.cat unp=Unp_Cliona21_R1.trim.cat_Cliona21_R2.trim.cat
+
 
 
 
@@ -216,6 +254,7 @@ grep @A0 Cliona22_R1.trim.cat | wc -l
 grep @A0 Cliona22_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona22_R1.trim.cat_Cliona22_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona22_R1.trim.cat right=Cliona22_R2.trim.cat unp=Unp_Cliona22_R1.trim.cat_Cliona22_R2.trim.cat
 
 
 
@@ -234,6 +273,8 @@ grep @A0 Cliona23_R1.trim.cat | wc -l
 grep @A0 Cliona23_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona23_R1.trim.cat_Cliona23_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona23_R1.trim.cat right=Cliona23_R2.trim.cat unp=Unp_Cliona23_R1.trim.cat_Cliona23_R2.trim.cat
+
 
 
 
@@ -251,6 +292,7 @@ grep @A0 ClionaRe1_R1.trim.cat | wc -l
 grep @A0 ClionaRe1_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe1_R1.trim.cat_ClionaRe1_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe1_R1.trim.cat right=ClionaRe1_R2.trim.cat unp=Unp_ClionaRe1_R1.trim.cat_ClionaRe1_R2.trim.cat
 
 
 
@@ -270,6 +312,9 @@ grep @A0 ClionaRe2_R1.trim.cat | wc -l
 grep @A0 ClionaRe2_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe2_R1.trim.cat_ClionaRe2_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe2_R1.trim.cat right=ClionaRe2_R2.trim.cat unp=Unp_ClionaRe2_R1.trim.cat_ClionaRe2_R2.trim.cat
+
+
 
 
 
@@ -285,6 +330,8 @@ perl /annotatingTranscriptomes/rePair.pl ClionaRe3_R1.trim.cat ClionaRe3_R2.trim
 grep @A0 ClionaRe3_R1.trim.cat | wc -l
 grep @A0 ClionaRe3_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe3_R1.trim.cat_ClionaRe3_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe3_R1.trim.cat right=ClionaRe3_R2.trim.cat unp=Unp_ClionaRe3_R1.trim.cat_ClionaRe3_R2.trim.cat
 
 
 
@@ -302,6 +349,8 @@ perl /annotatingTranscriptomes/rePair.pl ClionaRe4_R1.trim.cat ClionaRe4_R2.trim
 grep @A0 ClionaRe4_R1.trim.cat | wc -l
 grep @A0 ClionaRe4_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe4_R1.trim.cat_ClionaRe4_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe4_R1.trim.cat right=ClionaRe4_R2.trim.cat unp=Unp_ClionaRe4_R1.trim.cat_ClionaRe4_R2.trim.cat
 
 
 
@@ -321,6 +370,7 @@ grep @A0 ClionaRe5_R1.trim.cat | wc -l
 grep @A0 ClionaRe5_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe5_R1.trim.cat_ClionaRe5_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe5_R1.trim.cat right=ClionaRe5_R2.trim.cat unp=Unp_ClionaRe5_R1.trim.cat_ClionaRe5_R2.trim.cat
 
 
 
@@ -338,6 +388,8 @@ perl /annotatingTranscriptomes/rePair.pl ClionaRe7_R1.trim.cat ClionaRe7_R2.trim
 grep @A0 ClionaRe7_R1.trim.cat | wc -l
 grep @A0 ClionaRe7_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe7_R1.trim.cat_ClionaRe7_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe7_R1.trim.cat right=ClionaRe7_R2.trim.cat unp=Unp_ClionaRe7_R1.trim.cat_ClionaRe7_R2.trim.cat
 
 
 
@@ -358,6 +410,8 @@ grep @A0 ClionaRe8_R1.trim.cat | wc -l
 grep @A0 ClionaRe8_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe8_R1.trim.cat_ClionaRe8_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe8_R1.trim.cat right=ClionaRe8_R2.trim.cat unp=Unp_ClionaRe8_R1.trim.cat_ClionaRe8_R2.trim.cat
+
 
 
 
@@ -376,6 +430,7 @@ grep @A0 ClionaRe9_R1.trim.cat | wc -l
 grep @A0 ClionaRe9_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe9_R1.trim.cat_ClionaRe9_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe9_R1.trim.cat right=ClionaRe9_R2.trim.cat unp=Unp_ClionaRe9_R1.trim.cat_ClionaRe9_R2.trim.cat
 
 
 
@@ -395,6 +450,7 @@ grep @A0 ClionaRe10_R1.trim.cat | wc -l
 grep @A0 ClionaRe10_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe10_R1.trim.cat_ClionaRe10_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe10_R1.trim.cat right=ClionaRe10_R2.trim.cat unp=Unp_ClionaRe10_R1.trim.cat_ClionaRe10_R2.trim.cat
 
 
 
@@ -412,6 +468,8 @@ perl /annotatingTranscriptomes/rePair.pl ClionaRe11_R1.trim.cat ClionaRe11_R2.tr
 grep @A0 ClionaRe11_R1.trim.cat | wc -l
 grep @A0 ClionaRe11_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe11_R1.trim.cat_ClionaRe11_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe11_R1.trim.cat right=ClionaRe11_R2.trim.cat unp=Unp_ClionaRe1_R11.trim.cat_ClionaRe11_R2.trim.cat
 
 
 
@@ -432,6 +490,8 @@ grep @A0 ClionaRe12_R1.trim.cat | wc -l
 grep @A0 ClionaRe12_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe12_R1.trim.cat_ClionaRe12_R2.trim.cat | wc -l
 
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe12_R1.trim.cat right=ClionaRe12_R2.trim.cat unp=Unp_ClionaRe12_R1.trim.cat_ClionaRe12_R2.trim.cat
+
 
 
 
@@ -450,4 +510,6 @@ perl /annotatingTranscriptomes/rePair.pl ClionaRe13_R1.trim.cat ClionaRe13_R2.tr
 grep @A0 ClionaRe13_R1.trim.cat | wc -l
 grep @A0 ClionaRe13_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe13_R1.trim.cat_ClionaRe13_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe13_R1.trim.cat right=ClionaRe13_R2.trim.cat unp=Unp_ClionaRe13_R1.trim.cat_ClionaRe13_R2.trim.cat
 
