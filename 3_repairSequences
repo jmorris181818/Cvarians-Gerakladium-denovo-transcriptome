@@ -14,6 +14,21 @@
 ## Re-pairing sequences:
 # At this point you may have to make more space in your working directory as each step nearly doubles the data. 
 
+#How many reads are paired and unpaired after quality trimming? qsub the following count jobscript with a PBS wrapper.
+
+grep @D8Q R1_r1.trim.cat | wc -l
+grep @D8Q R2_r2.trim.cat | wc -l
+grep @D8Q Unp_r1.trim.cat_r2.trim.cat | wc -l
+
+#R1 and R2 paired counts should be the same. If they are not, then the scratch folder likely ran out of memory. 
+
+#Repaired counts for Cliona:
+#R1_Cliona 133644264 
+#R2_Cliona 133644264
+#UnPair_Cliona 62605944
+
+
+
 
 
 #Cliona1
@@ -24,6 +39,11 @@ grep @A0 Cliona1_R1.trim.cat | wc -l
 grep @A0 Cliona1_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona1_R1.trim.cat Cliona1_R2.trim.cat
+
+grep @A0 Cliona1_R1.trim.cat | wc -l
+grep @A0 Cliona1_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat | wc -l
+
 
 
 
@@ -37,6 +57,14 @@ grep @A0 Cliona4_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona4_R1.trim.cat Cliona4_R2.trim.cat
 
+grep @A0 Cliona4_R1.trim.cat | wc -l
+grep @A0 Cliona4_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona4_R1.trim.cat_Cliona4_R2.trim.cat | wc -l
+
+
+
+
+
 
 
 #Cliona5
@@ -47,6 +75,13 @@ grep @A0 Cliona5_R1.trim.cat | wc -l
 grep @A0 Cliona5_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona5_R1.trim.cat Cliona5_R2.trim.cat
+
+grep @A0 Cliona5_R1.trim.cat | wc -l
+grep @A0 Cliona5_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona5_R1.trim.cat_Cliona5_R2.trim.cat | wc -l
+
+
+
 
 
 
@@ -60,6 +95,14 @@ grep @A0 Cliona6_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona6_R1.trim.cat Cliona6_R2.trim.cat
 
+grep @A0 Cliona6_R1.trim.cat | wc -l
+grep @A0 Cliona6_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona6_R1.trim.cat_Cliona6_R2.trim.cat | wc -l
+
+
+
+
+
 
 
 
@@ -71,6 +114,15 @@ grep @A0 Cliona8_R1.trim.cat | wc -l
 grep @A0 Cliona8_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona8_R1.trim.cat Cliona8_R2.trim.cat
+
+grep @A0 Cliona8_R1.trim.cat | wc -l
+grep @A0 Cliona8_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona8_R1.trim.cat_Cliona8_R2.trim.cat | wc -l
+
+
+
+
+
 
 
 
@@ -84,6 +136,13 @@ grep @A0 Cliona9_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona9_R1.trim.cat Cliona9_R2.trim.cat
 
+grep @A0 Cliona9_R1.trim.cat | wc -l
+grep @A0 Cliona9_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona9_R1.trim.cat_Cliona9_R2.trim.cat | wc -l
+
+
+
+
 
 
 
@@ -95,6 +154,13 @@ grep @A0 Cliona10_R1.trim.cat | wc -l
 grep @A0 Cliona10_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona10_R1.trim.cat Cliona10_R2.trim.cat
+
+grep @A0 Cliona10_R1.trim.cat | wc -l
+grep @A0 Cliona10_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona10_R1.trim.cat_Cliona10_R2.trim.cat | wc -l
+
+
+
 
 
 
@@ -108,6 +174,13 @@ grep @A0 Cliona17_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona17_R1.trim.cat Cliona17_R2.trim.cat
 
+grep @A0 Cliona17_R1.trim.cat | wc -l
+grep @A0 Cliona17_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona17_R1.trim.cat_Cliona17_R2.trim.cat | wc -l
+
+
+
+
 
 
 
@@ -119,6 +192,12 @@ grep @A0 Cliona21_R1.trim.cat | wc -l
 grep @A0 Cliona21_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona21_R1.trim.cat Cliona21_R2.trim.cat
+
+grep @A0 Cliona21_R1.trim.cat | wc -l
+grep @A0 Cliona21_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona21_R1.trim.cat_Cliona21_R2.trim.cat | wc -l
+
+
 
 
 
@@ -133,6 +212,12 @@ grep @A0 Cliona22_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona22_R1.trim.cat Cliona22_R2.trim.cat
 
+grep @A0 Cliona22_R1.trim.cat | wc -l
+grep @A0 Cliona22_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona22_R1.trim.cat_Cliona22_R2.trim.cat | wc -l
+
+
+
 
 
 
@@ -144,6 +229,10 @@ grep @A0 Cliona23_R1.trim.cat | wc -l
 grep @A0 Cliona23_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl Cliona23_R1.trim.cat Cliona23_R2.trim.cat
+
+grep @A0 Cliona23_R1.trim.cat | wc -l
+grep @A0 Cliona23_R2.trim.cat | wc -l
+grep @A0 Unp_Cliona23_R1.trim.cat_Cliona23_R2.trim.cat | wc -l
 
 
 
@@ -158,6 +247,12 @@ grep @A0 ClionaRe1_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe1_R1.trim.cat ClionaRe1_R2.trim.cat
 
+grep @A0 ClionaRe1_R1.trim.cat | wc -l
+grep @A0 ClionaRe1_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe1_R1.trim.cat_ClionaRe1_R2.trim.cat | wc -l
+
+
+
 
 
 
@@ -171,6 +266,9 @@ grep @A0 ClionaRe2_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe2_R1.trim.cat ClionaRe2_R2.trim.cat
 
+grep @A0 ClionaRe2_R1.trim.cat | wc -l
+grep @A0 ClionaRe2_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe2_R1.trim.cat_ClionaRe2_R2.trim.cat | wc -l
 
 
 
@@ -184,6 +282,11 @@ grep @A0 ClionaRe3_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe3_R1.trim.cat ClionaRe3_R2.trim.cat
 
+grep @A0 ClionaRe3_R1.trim.cat | wc -l
+grep @A0 ClionaRe3_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe3_R1.trim.cat_ClionaRe3_R2.trim.cat | wc -l
+
+
 
 
 
@@ -195,6 +298,11 @@ grep @A0 ClionaRe4_R1.trim.cat | wc -l
 grep @A0 ClionaRe4_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe4_R1.trim.cat ClionaRe4_R2.trim.cat
+
+grep @A0 ClionaRe4_R1.trim.cat | wc -l
+grep @A0 ClionaRe4_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe4_R1.trim.cat_ClionaRe4_R2.trim.cat | wc -l
+
 
 
 
@@ -209,6 +317,11 @@ grep @A0 ClionaRe5_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe5_R1.trim.cat ClionaRe5_R2.trim.cat
 
+grep @A0 ClionaRe5_R1.trim.cat | wc -l
+grep @A0 ClionaRe5_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe5_R1.trim.cat_ClionaRe5_R2.trim.cat | wc -l
+
+
 
 
 
@@ -222,6 +335,13 @@ grep @A0 ClionaRe7_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe7_R1.trim.cat ClionaRe7_R2.trim.cat
 
+grep @A0 ClionaRe7_R1.trim.cat | wc -l
+grep @A0 ClionaRe7_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe7_R1.trim.cat_ClionaRe7_R2.trim.cat | wc -l
+
+
+
+
 
 
 
@@ -234,6 +354,12 @@ grep @A0 ClionaRe8_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe8_R1.trim.cat ClionaRe8_R2.trim.cat
 
+grep @A0 ClionaRe8_R1.trim.cat | wc -l
+grep @A0 ClionaRe8_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe8_R1.trim.cat_ClionaRe8_R2.trim.cat | wc -l
+
+
+
 
 
 
@@ -245,6 +371,12 @@ grep @A0 ClionaRe9_R1.trim.cat | wc -l
 grep @A0 ClionaRe9_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe9_R1.trim.cat ClionaRe9_R2.trim.cat
+
+grep @A0 ClionaRe9_R1.trim.cat | wc -l
+grep @A0 ClionaRe9_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe9_R1.trim.cat_ClionaRe9_R2.trim.cat | wc -l
+
+
 
 
 
@@ -259,6 +391,11 @@ grep @A0 ClionaRe10_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe10_R1.trim.cat ClionaRe10_R2.trim.cat
 
+grep @A0 ClionaRe10_R1.trim.cat | wc -l
+grep @A0 ClionaRe10_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe10_R1.trim.cat_ClionaRe10_R2.trim.cat | wc -l
+
+
 
 
 
@@ -271,6 +408,11 @@ grep @A0 ClionaRe11_R1.trim.cat | wc -l
 grep @A0 ClionaRe11_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe11_R1.trim.cat ClionaRe11_R2.trim.cat
+
+grep @A0 ClionaRe11_R1.trim.cat | wc -l
+grep @A0 ClionaRe11_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe11_R1.trim.cat_ClionaRe11_R2.trim.cat | wc -l
+
 
 
 
@@ -286,6 +428,12 @@ grep @A0 ClionaRe12_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe12_R1.trim.cat ClionaRe12_R2.trim.cat
 
+grep @A0 ClionaRe12_R1.trim.cat | wc -l
+grep @A0 ClionaRe12_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe12_R1.trim.cat_ClionaRe12_R2.trim.cat | wc -l
+
+
+
 
 
 
@@ -299,28 +447,7 @@ grep @A0 ClionaRe13_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/rePair.pl ClionaRe13_R1.trim.cat ClionaRe13_R2.trim.cat
 
+grep @A0 ClionaRe13_R1.trim.cat | wc -l
+grep @A0 ClionaRe13_R2.trim.cat | wc -l
+grep @A0 Unp_ClionaRe13_R1.trim.cat_ClionaRe13_R2.trim.cat | wc -l
 
-
-
-
-
-
-
-#How many reads are paired and unpaired after quality trimming? qsub the following count jobscript with a PBS wrapper.
-
-grep @D8Q R1_r1.trim.cat | wc -l
-grep @D8Q R2_r2.trim.cat | wc -l
-grep @D8Q Unp_r1.trim.cat_r2.trim.cat | wc -l
-
-###Carterio repaired
-#R1_ 152365270 
-#R2_ 152365270
-#UnPair_ 44629903
-
-
-#R1 and R2 paired counts should be the same. If they are not, then the scratch folder likely ran out of memory. 
-
-#Repaired counts for Cliona:
-#R1_Cliona 133644264 
-#R2_Cliona 133644264
-#UnPair_Cliona 62605944
