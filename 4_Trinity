@@ -1,0 +1,26 @@
+cat R1_r1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > R1p_suf1.fastq && cat Unp_r1.trim.cat_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> R1p_suf1.fastq
+cat R2_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > R2p_suf2.fastq 
+
+###########
+#Transcriptome assembly using Trinity 
+
+#can increase CPU number with computing availability 
+
+Trinity --seqType fq --max_memory 25G --left R1p_suf1.fastq --right R2p_suf2.fastq --CPU 6
+
+######assembly stats
+
+seq_stats.pl Trinity.fasta
+
+#cliona
+#Trinity.fasta
+#-------------------------
+#397585 sequences.
+#849 average length.
+#22485 maximum length.
+#182 minimum length.
+#N50 = 1425
+#337.7 Mb altogether (337682700 bp).
+#0 ambiguous Mb. (0 bp, 0%)
+#0 Mb of Ns. (0 bp, 0%)
+#-------------------------
