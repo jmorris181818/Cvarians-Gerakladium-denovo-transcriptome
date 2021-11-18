@@ -70,6 +70,9 @@ grep @A0 Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona1_R1.trim.cat right=Cliona1_R2.trim.cat unp=Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat
 
+cat Cliona1_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona1_R1p_suf1.fastq && cat Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona1_R1p_suf1.fastq
+cat Cliona1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona1_R2p_suf2.fastq 
+
 
 
 
@@ -88,6 +91,8 @@ grep @A0 Unp_Cliona4_R1.trim.cat_Cliona4_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona4_R1.trim.cat right=Cliona4_R2.trim.cat unp=Unp_Cliona4_R1.trim.cat_Cliona4_R2.trim.cat
 
+cat Cliona4_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona4_R1p_suf1.fastq && cat Unp_Cliona4_R1.trim.cat_Cliona4_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona4_R1p_suf1.fastq
+cat Cliona4_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona4_R2p_suf2.fastq 
 
 
 
@@ -108,6 +113,8 @@ grep @A0 Unp_Cliona5_R1.trim.cat_Cliona5_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona5_R1.trim.cat right=Cliona5_R2.trim.cat unp=Unp_Cliona5_R1.trim.cat_Cliona5_R2.trim.cat
 
+cat Cliona5_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona5_R1p_suf1.fastq && cat Unp_Cliona5_R1.trim.cat_Cliona5_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona5_R1p_suf1.fastq
+cat Cliona5_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona5_R2p_suf2.fastq 
 
 
 
@@ -129,6 +136,8 @@ grep @A0 Unp_Cliona6_R1.trim.cat_Cliona6_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona6_R1.trim.cat right=Cliona6_R2.trim.cat unp=Unp_Cliona6_R1.trim.cat_Cliona6_R2.trim.cat
 
+cat Cliona6_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona6_R1p_suf1.fastq && cat Unp_Cliona6_R1.trim.cat_Cliona6_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona6_R1p_suf1.fastq
+cat Cliona6_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona6_R2p_suf2.fastq 
 
 
 
@@ -151,6 +160,8 @@ grep @A0 Unp_Cliona8_R1.trim.cat_Cliona8_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona8_R1.trim.cat right=Cliona8_R2.trim.cat unp=Unp_Cliona8_R1.trim.cat_Cliona8_R2.trim.cat
 
+cat Cliona8_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona8_R1p_suf1.fastq && cat Unp_Cliona8_R1.trim.cat_Cliona8_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona8_R1p_suf1.fastq
+cat Cliona8_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona8_R2p_suf2.fastq 
 
 
 
@@ -173,6 +184,9 @@ grep @A0 Unp_Cliona9_R1.trim.cat_Cliona9_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona9_R1.trim.cat right=Cliona9_R2.trim.cat unp=Unp_Cliona9_R1.trim.cat_Cliona9_R2.trim.cat
 
+cat Cliona9_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona9_R1p_suf1.fastq && cat Unp_Cliona9_R1.trim.cat_Cliona9_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona9_R1p_suf1.fastq
+cat Cliona9_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona9_R2p_suf2.fastq 
+
 
 
 
@@ -194,6 +208,8 @@ grep @A0 Unp_Cliona10_R1.trim.cat_Cliona10_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona10_R1.trim.cat right=Cliona10_R2.trim.cat unp=Unp_Cliona10_R1.trim.cat_Cliona10_R2.trim.cat
 
+cat Cliona10_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona10_R1p_suf1.fastq && cat Unp_Cliona10_R1.trim.cat_Cliona10_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona10_R1p_suf1.fastq
+cat Cliona10_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona10_R2p_suf2.fastq 
 
 
 
@@ -213,6 +229,9 @@ grep @A0 Cliona17_R2.trim.cat | wc -l
 grep @A0 Unp_Cliona17_R1.trim.cat_Cliona17_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona17_R1.trim.cat right=Cliona17_R2.trim.cat unp=Unp_Cliona17_R1.trim.cat_Cliona17_R2.trim.cat
+
+cat Cliona17_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona17_R1p_suf1.fastq && cat Unp_Cliona17_R1.trim.cat_Cliona17_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona17_R1p_suf1.fastq
+cat Cliona17_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona17_R2p_suf2.fastq 
 
 
 
@@ -235,6 +254,8 @@ grep @A0 Unp_Cliona21_R1.trim.cat_Cliona21_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona21_R1.trim.cat right=Cliona21_R2.trim.cat unp=Unp_Cliona21_R1.trim.cat_Cliona21_R2.trim.cat
 
+cat Cliona21_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona21_R1p_suf1.fastq && cat Unp_Cliona21_R1.trim.cat_Cliona21_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona21_R1p_suf1.fastq
+cat Cliona21_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona21_R2p_suf2.fastq 
 
 
 
@@ -256,6 +277,8 @@ grep @A0 Unp_Cliona22_R1.trim.cat_Cliona22_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona22_R1.trim.cat right=Cliona22_R2.trim.cat unp=Unp_Cliona22_R1.trim.cat_Cliona22_R2.trim.cat
 
+cat Cliona22_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona22_R1p_suf1.fastq && cat Unp_Cliona22_R1.trim.cat_Cliona22_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona22_R1p_suf1.fastq
+cat Cliona22_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona22_R2p_suf2.fastq 
 
 
 
@@ -275,6 +298,8 @@ grep @A0 Unp_Cliona23_R1.trim.cat_Cliona23_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona23_R1.trim.cat right=Cliona23_R2.trim.cat unp=Unp_Cliona23_R1.trim.cat_Cliona23_R2.trim.cat
 
+cat Cliona23_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona23_R1p_suf1.fastq && cat Unp_Cliona23_R1.trim.cat_Cliona23_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona23_R1p_suf1.fastq
+cat Cliona23_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona23_R2p_suf2.fastq 
 
 
 
@@ -294,6 +319,8 @@ grep @A0 Unp_ClionaRe1_R1.trim.cat_ClionaRe1_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe1_R1.trim.cat right=ClionaRe1_R2.trim.cat unp=Unp_ClionaRe1_R1.trim.cat_ClionaRe1_R2.trim.cat
 
+cat ClionaRe1_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe1_R1p_suf1.fastq && cat Unp_ClionaRe1_R1.trim.cat_ClionaRe1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe1_R1p_suf1.fastq
+cat ClionaRe1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe1_R2p_suf2.fastq 
 
 
 
@@ -314,6 +341,9 @@ grep @A0 Unp_ClionaRe2_R1.trim.cat_ClionaRe2_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe2_R1.trim.cat right=ClionaRe2_R2.trim.cat unp=Unp_ClionaRe2_R1.trim.cat_ClionaRe2_R2.trim.cat
 
+cat ClionaRe2_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe2_R1p_suf1.fastq && cat Unp_ClionaRe2_R1.trim.cat_ClionaRe2_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe2_R1p_suf1.fastq
+cat ClionaRe2_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe2_R2p_suf2.fastq 
+
 
 
 
@@ -332,6 +362,10 @@ grep @A0 ClionaRe3_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe3_R1.trim.cat_ClionaRe3_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe3_R1.trim.cat right=ClionaRe3_R2.trim.cat unp=Unp_ClionaRe3_R1.trim.cat_ClionaRe3_R2.trim.cat
+
+cat ClionaRe3_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe3_R1p_suf1.fastq && cat Unp_ClionaRe3_R1.trim.cat_ClionaRe3_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe3_R1p_suf1.fastq
+cat ClionaRe3_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe3_R2p_suf2.fastq 
+
 
 
 
@@ -352,6 +386,8 @@ grep @A0 Unp_ClionaRe4_R1.trim.cat_ClionaRe4_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe4_R1.trim.cat right=ClionaRe4_R2.trim.cat unp=Unp_ClionaRe4_R1.trim.cat_ClionaRe4_R2.trim.cat
 
+cat ClionaRe4_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe4_R1p_suf1.fastq && cat Unp_ClionaRe4_R1.trim.cat_ClionaRe4_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe4_R1p_suf1.fastq
+cat ClionaRe4_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe4_R2p_suf2.fastq 
 
 
 
@@ -372,6 +408,11 @@ grep @A0 Unp_ClionaRe5_R1.trim.cat_ClionaRe5_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe5_R1.trim.cat right=ClionaRe5_R2.trim.cat unp=Unp_ClionaRe5_R1.trim.cat_ClionaRe5_R2.trim.cat
 
+cat ClionaRe5_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe5_R1p_suf1.fastq && cat Unp_ClionaRe5_R1.trim.cat_ClionaRe5_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe5_R1p_suf1.fastq
+cat ClionaRe5_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe5_R2p_suf2.fastq 
+
+
+
 
 
 
@@ -391,6 +432,8 @@ grep @A0 Unp_ClionaRe7_R1.trim.cat_ClionaRe7_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe7_R1.trim.cat right=ClionaRe7_R2.trim.cat unp=Unp_ClionaRe7_R1.trim.cat_ClionaRe7_R2.trim.cat
 
+cat ClionaRe7_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe7_R1p_suf1.fastq && cat Unp_ClionaRe7_R1.trim.cat_ClionaRe7_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe7_R1p_suf1.fastq
+cat ClionaRe7_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe7_R2p_suf2.fastq 
 
 
 
@@ -412,6 +455,8 @@ grep @A0 Unp_ClionaRe8_R1.trim.cat_ClionaRe8_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe8_R1.trim.cat right=ClionaRe8_R2.trim.cat unp=Unp_ClionaRe8_R1.trim.cat_ClionaRe8_R2.trim.cat
 
+cat ClionaRe8_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe8_R1p_suf1.fastq && cat Unp_ClionaRe8_R1.trim.cat_ClionaRe8_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe8_R1p_suf1.fastq
+cat ClionaRe8_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe8_R2p_suf2.fastq 
 
 
 
@@ -431,6 +476,9 @@ grep @A0 ClionaRe9_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe9_R1.trim.cat_ClionaRe9_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe9_R1.trim.cat right=ClionaRe9_R2.trim.cat unp=Unp_ClionaRe9_R1.trim.cat_ClionaRe9_R2.trim.cat
+
+cat ClionaRe9_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe9_R1p_suf1.fastq && cat Unp_ClionaRe9_R1.trim.cat_ClionaRe9_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe9_R1p_suf1.fastq
+cat ClionaRe9_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe9_R2p_suf2.fastq 
 
 
 
@@ -452,6 +500,10 @@ grep @A0 Unp_ClionaRe10_R1.trim.cat_ClionaRe10_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe10_R1.trim.cat right=ClionaRe10_R2.trim.cat unp=Unp_ClionaRe10_R1.trim.cat_ClionaRe10_R2.trim.cat
 
+cat ClionaRe10_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe10_R1p_suf1.fastq && cat Unp_ClionaRe10_R1.trim.cat_ClionaRe10_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe10_R1p_suf1.fastq
+cat ClionaRe10_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe10_R2p_suf2.fastq 
+
+
 
 
 
@@ -471,6 +523,8 @@ grep @A0 Unp_ClionaRe11_R1.trim.cat_ClionaRe11_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe11_R1.trim.cat right=ClionaRe11_R2.trim.cat unp=Unp_ClionaRe1_R11.trim.cat_ClionaRe11_R2.trim.cat
 
+cat ClionaRe11_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe11_R1p_suf1.fastq && cat Unp_ClionaRe11_R1.trim.cat_ClionaRe11_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe11_R1p_suf1.fastq
+cat ClionaRe11_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe11_R2p_suf2.fastq 
 
 
 
@@ -492,6 +546,8 @@ grep @A0 Unp_ClionaRe12_R1.trim.cat_ClionaRe12_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe12_R1.trim.cat right=ClionaRe12_R2.trim.cat unp=Unp_ClionaRe12_R1.trim.cat_ClionaRe12_R2.trim.cat
 
+cat ClionaRe12_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe12_R1p_suf1.fastq && cat Unp_ClionaRe12_R1.trim.cat_ClionaRe12_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe12_R1p_suf1.fastq
+cat ClionaRe12_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe12_R2p_suf2.fastq 
 
 
 
@@ -512,4 +568,7 @@ grep @A0 ClionaRe13_R2.trim.cat | wc -l
 grep @A0 Unp_ClionaRe13_R1.trim.cat_ClionaRe13_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=ClionaRe13_R1.trim.cat right=ClionaRe13_R2.trim.cat unp=Unp_ClionaRe13_R1.trim.cat_ClionaRe13_R2.trim.cat
+
+cat ClionaRe13_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > ClionaRe13_R1p_suf1.fastq && cat Unp_ClionaRe13_R1.trim.cat_ClionaRe13_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> ClionaRe13_R1p_suf1.fastq
+cat ClionaRe13_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > ClionaRe13_R2p_suf2.fastq 
 
