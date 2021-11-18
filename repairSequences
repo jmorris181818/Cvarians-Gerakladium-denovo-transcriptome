@@ -1,0 +1,38 @@
+#####cat r1.trim r1_l2.trim > r1.trim.cat.   #### Shouldn't matter for us since our data comes from 1 Lane
+#####cat r2.trim r2_l2.trim > r2.trim.cat
+
+#####count concatinated reads. Submit as job with PBS wrapper. Counts will appear in the generated output file.
+
+#####grep @D8Q r1.trim.cat | wc -l
+#####grep @D8Q r2.trim.cat | wc -l
+
+######R1 and R2 counts for Cliona:
+
+######Cliona R1.cat - 171200113
+######Cliona R2.cat - 158694359
+
+########## Re-pairing sequences:
+# At this point you may have to make more space in your working directory as each step nearly doubles the data. 
+
+perl /annotatingTranscriptomes/rePair.pl r1.trim.cat r2.trim.cat
+
+
+
+#How many reads are paired and unpaired after quality trimming? qsub the following count jobscript with a PBS wrapper.
+
+grep @D8Q R1_r1.trim.cat | wc -l
+grep @D8Q R2_r2.trim.cat | wc -l
+grep @D8Q Unp_r1.trim.cat_r2.trim.cat | wc -l
+
+###Carterio repaired
+#R1_ 152365270 
+#R2_ 152365270
+#UnPair_ 44629903
+
+
+#R1 and R2 paired counts should be the same. If they are not, then the scratch folder likely ran out of memory. 
+
+#Repaired counts for Cliona:
+#R1_Cliona 133644264 
+#R2_Cliona 133644264
+#UnPair_Cliona 62605944
