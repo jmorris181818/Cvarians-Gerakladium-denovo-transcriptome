@@ -1,20 +1,3 @@
-######Quality Trimming
-# trimming adaptors and quality filtering
-#removing reads with greater than 9 sequential "As", and removing Truseq adaptors, discarding reads shorter than 50 nucleotides
-#retain only reads with minimum quality score of 20 over at least 80% of the read
-
-######Fastx_clipper
-cat R1reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r1.trim
-cat R2reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r2.trim
-
-#Counting reads remaining after quality Trim. Check line header using head r1.trim. Mine was @DQ8. Submit the script below as 'count_reads.job'
-
-grep @D8Q r1.trim | wc -l
-grep @D8Q r2.trim | wc -l
-
-
-
-
 #Cliona1
 cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
 cat Cliona_1_S1_L001_R2_001.fastq > Cliona1-R2.fastq
