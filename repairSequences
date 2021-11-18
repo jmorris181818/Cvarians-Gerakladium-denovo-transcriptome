@@ -14,7 +14,157 @@
 ########## Re-pairing sequences:
 # At this point you may have to make more space in your working directory as each step nearly doubles the data. 
 
-perl /annotatingTranscriptomes/rePair.pl r1.trim.cat r2.trim.cat
+
+
+#Cliona1
+cat Cliona1_R1.trim > Cliona1_R1.trim.cat
+cat Cliona1_R2.trim > Cliona1_R2.trim.cat
+
+grep @A0 Cliona1_R1.trim.cat | wc -l
+grep @A0 Cliona1_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona1_R1.trim.cat Cliona1_R2.trim.cat
+
+
+
+
+#Cliona4
+cat Cliona4_R1.trim > Cliona4_R1.trim.cat
+cat Cliona4_R2.trim > Cliona4_R2.trim.cat
+
+grep @A0 Cliona4_R1.trim.cat | wc -l
+grep @A0 Cliona4_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona4_R1.trim.cat Cliona4_R2.trim.cat
+
+
+
+#Cliona5
+cat Cliona5_R1.trim > Cliona5_R1.trim.cat
+cat Cliona5_R2.trim > Cliona5_R2.trim.cat
+
+grep @A0 Cliona5_R1.trim.cat | wc -l
+grep @A0 Cliona5_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona5_R1.trim.cat Cliona5_R2.trim.cat
+
+
+
+
+#Cliona6
+cat Cliona6_R1.trim > Cliona6_R1.trim.cat
+cat Cliona6_R2.trim > Cliona6_R2.trim.cat
+
+grep @A0 Cliona6_R1.trim.cat | wc -l
+grep @A0 Cliona6_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona6_R1.trim.cat Cliona6_R2.trim.cat
+
+
+
+
+#Cliona8
+cat Cliona8_R1.trim > Cliona8_R1.trim.cat
+cat Cliona8_R2.trim > Cliona8_R2.trim.cat
+
+grep @A0 Cliona8_R1.trim.cat | wc -l
+grep @A0 Cliona8_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona8_R1.trim.cat Cliona8_R2.trim.cat
+
+
+
+
+#Cliona9
+cat Cliona9_R1.trim > Cliona9_R1.trim.cat
+cat Cliona9_R2.trim > Cliona9_R2.trim.cat
+
+grep @A0 Cliona9_R1.trim.cat | wc -l
+grep @A0 Cliona9_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona9_R1.trim.cat Cliona9_R2.trim.cat
+
+
+
+
+#Cliona10
+cat Cliona10_R1.trim > Cliona10_R1.trim.cat
+cat Cliona10_R2.trim > Cliona10_R2.trim.cat
+
+grep @A0 Cliona10_R1.trim.cat | wc -l
+grep @A0 Cliona10_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona10_R1.trim.cat Cliona10_R2.trim.cat
+
+
+
+
+#Cliona17
+cat Cliona17_R1.trim > Cliona17_R1.trim.cat
+cat Cliona17_R2.trim > Cliona17_R2.trim.cat
+
+grep @A0 Cliona17_R1.trim.cat | wc -l
+grep @A0 Cliona17_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona17_R1.trim.cat Cliona17_R2.trim.cat
+
+
+
+
+#Cliona21
+cat Cliona21_R1.trim > Cliona21_R1.trim.cat
+cat Cliona21_R2.trim > Cliona21_R2.trim.cat
+
+grep @A0 Cliona21_R1.trim.cat | wc -l
+grep @A0 Cliona21_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona21_R1.trim.cat Cliona21_R2.trim.cat
+
+
+
+
+
+#Cliona22
+cat Cliona22_R1.trim > Cliona22_R1.trim.cat
+cat Cliona22_R2.trim > Cliona22_R2.trim.cat
+
+grep @A0 Cliona22_R1.trim.cat | wc -l
+grep @A0 Cliona22_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona22_R1.trim.cat Cliona22_R2.trim.cat
+
+
+
+
+#Cliona23
+cat Cliona23_R1.trim > Cliona23_R1.trim.cat
+cat Cliona23_R2.trim > Cliona23_R2.trim.cat
+
+grep @A0 Cliona23_R1.trim.cat | wc -l
+grep @A0 Cliona23_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl Cliona23_R1.trim.cat Cliona23_R2.trim.cat
+
+
+
+
+
+#ClionaRe1
+cat ClionaRe1_R1.trim > ClionaRe1_R1.trim.cat
+cat ClionaRe1_R2.trim > ClionaRe1_R2.trim.cat
+
+grep @A0 ClionaRe1_R1.trim.cat | wc -l
+grep @A0 ClionaRe1_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe1_R1.trim.cat ClionaRe1_R2.trim.cat
+
+
+
+
+
+
+
+
 
 
 
