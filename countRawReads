@@ -7,8 +7,95 @@ gunzip Cliona_*.fastq.gz
 
 cat yourfilename.fastq | grep @A0 | wc -l
 
-Ex) cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l     #10,581,948
-Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     #10,581,948
+#Cliona1
+cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l     
+cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     
 
-#####Cliona - #104,183,967# (lane 1, R1); #104,889,814# (lane 1, R2)
-#####there will also be ones for R2 lanes 1 and 2 I, I just did not note them here
+#Cliona4
+cat Cliona_4_S2_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_4_S2_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona5
+cat Cliona_5_S3_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_5_S3_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona6
+cat Cliona_6_S4_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_6_S4_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona8
+cat Cliona_8_S6_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_8_S6_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona9
+cat Cliona_9_S7_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_9_S7_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona10
+cat Cliona_10_S8_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_10_S8_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona17
+cat Cliona_17_S14_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_17_S14_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona21
+cat Cliona_21_S18_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_21_S18_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona22
+cat Cliona_22_S19_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_22_S19_L001_R2_001.fastq | grep @A0 | wc -l
+
+#Cliona23
+cat Cliona_23_S20_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_23_S20_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe1
+cat Cliona_Redo1_S22_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo1_S22_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe2
+cat Cliona_Redo2_S21_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo2_S21_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe3
+cat Cliona_Redo3_S5_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo3_S5_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe4
+cat Cliona_Redo4_S9_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo4_S9_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe5
+cat Cliona_Redo5_S16_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo5_S16_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe7
+cat Cliona_Redo7_S17_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo7_S17_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe8
+cat Cliona_Redo8_S13_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo8_S13_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe9
+cat Cliona_Redo9_S15_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo9_S15_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe10
+cat Cliona_Redo10_S10_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo10_S10_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe11
+cat Cliona_Redo11_S11_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo11_S11_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe12
+cat Cliona_Redo12_S23_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo12_S23_L001_R2_001.fastq | grep @A0 | wc -l
+
+#ClionaRe13
+cat Cliona_Redo13_S12_L001_R1_001.fastq | grep @A0 | wc -l
+cat Cliona_Redo13_S12_L001_R2_001.fastq | grep @A0 | wc -l
+
