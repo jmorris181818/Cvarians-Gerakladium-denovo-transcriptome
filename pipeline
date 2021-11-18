@@ -1,6 +1,6 @@
-##Scripts for trimming, assembly and annotation of transcriptomes for C. foliascens, C. orientalis and G. endoclionum 
+##Scripts for trimming, assembly and annotation of transcriptomes for C. varians (sponge) and G. endoclionum (symbiont)
 
-#Scripts provided here were modified from ones written by M. Matz https://github.com/z0on , E. Meyer https://github.com/Eli-Meyer , and C. Kenkel https://github.com/ckenkel/assemblingTranscriptomes
+#Scripts provided here were modified from ones written by M. Matz https://github.com/z0on , E. Meyer https://github.com/Eli-Meyer , C. Kenkel https://github.com/ckenkel/assemblingTranscriptomes, and B. Strehlow https://github.com/bstrehlow
 
 #command below downloads the established scripts from github
 
@@ -14,29 +14,32 @@ git clone https://github.com/Eli-Meyer/transcriptome_utilities
 #copy zipped files to scratch folder 
 
 #Unzip fastq files of raw sequences
-gunzip STR667_*.fastq.gz 
+gunzip Cliona_*.fastq.gz 
  
 
-#to count reads you will see an @ line for each read - it will start with some letter designation, just use that, in this case: @D8
-#then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest. 
+#####to count reads you will see an @ line for each read - it will start with some letter designation, just use that, in this case: @A0
+#####then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest. 
 
-cat yourfilename.fastq | grep @D8 | wc -l
+cat yourfilename.fastq | grep @A0 | wc -l
 
-#Cliona - 104,183,967 (lane 1, R1); 104,889,814 (lane 2, R1)
-#there will also be ones for R2 lanes 1 and 2 I, I just did not note them here
+Ex) cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l     #10,581,948
+Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     #10,581,948
 
+#####Cliona - #104,183,967# (lane 1, R1); #104,889,814# (lane 1, R2)
+#####there will also be ones for R2 lanes 1 and 2 I, I just did not note them here
+
+#############Do we need to do this individually for each sample ID????
 #Cliona 
-#L1R1: 104183967
-#L1R2: 104184006
-#L2R1: 104889814
-#L2R2: 104889855
-#total: 418,147,642
+#L1R1: #104183967#
+#L1R2: #104184006#
 
-#Carterio l1, R1: 102191710
-#l1, R2: 102191712
-#L2, R1: 102585014
-#L2, R2: 102585020
-#total: 409553456
+#total: #418,147,642#
+
+
+
+
+
+
 
 ######Quality Trimming
 # trimming adaptors and quality filtering
@@ -44,16 +47,39 @@ cat yourfilename.fastq | grep @D8 | wc -l
 #retain only reads with minimum quality score of 20 over at least 80% of the read
 
 
-#carterio
-#combined R1s and R2s, note, would be faster to parallelize and then combine Rs after they have been trimmed
-cat STR667_Carterio_ACAGTG_L001_R1_001.fastq STR667_Carterio_ACAGTG_L002_R1_001.fastq > R1reads.fastq 
-
-cat STR667_Carterio_ACAGTG_L001_R2_001.fastq STR667_Carterio_ACAGTG_L002_R2_001.fastq > R2reads.fastq 
 
 #cliona 
-cat STR667_Cliona_GTGAAA_L001_R1_001.fastq STR667_Cliona_GTGAAA_L002_R1_001.fastq > R1reads.fastq
+Ex) cat STR667_Cliona_GTGAAA_L001_R1_001.fastq STR667_Cliona_GTGAAA_L002_R1_001.fastq > R1reads.fastq
+Ex) cat STR667_Cliona_GTGAAA_L001_R2_001.fastq STR667_Cliona_GTGAAA_L002_R2_001.fastq > R2reads.fastq
 
-cat STR667_Cliona_GTGAAA_L001_R2_001.fastq STR667_Cliona_GTGAAA_L002_R2_001.fastq > R2reads.fastq
+#Cliona1
+cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
+cat Cliona_1_S1_L001_R2_001.fastq > Cliona1-R2.fastq
+
+#Cliona4
+cat Cliona_4_S2_L001_R1_001.fastq > Cliona4-R1.fastq
+cat Cliona_4_S2_L001_R2_001.fastq > Cliona4-R2.fastq
+
+#Cliona5
+cat Cliona_5_S3_L001_R1_001.fastq > Cliona5-R1.fastq
+cat Cliona_5_S3_L001_R2_001.fastq > Cliona5-R2.fastq
+
+#Cliona6
+cat Cliona_6_S4_L001_R1_001.fastq > Cliona6-R1.fastq
+cat Cliona_6_S4_L001_R2_001.fastq > Cliona6-R2.fastq
+
+#Cliona8
+cat Cliona_8_S6_L001_R1_001.fastq > Cliona8-R1.fastq
+cat Cliona_8_S6_L001_R2_001.fastq > Cliona8-R2.fastq
+
+
+
+
+
+
+
+
+
 
 #quality filter using fastx_clipper 
 
@@ -61,9 +87,7 @@ cat STR667_Cliona_GTGAAA_L001_R2_001.fastq STR667_Cliona_GTGAAA_L002_R2_001.fast
 export L1_R1reads=STR667_Cliona_GTGAAA_L001_R1_001.fastq 
 export L1_R2reads=STR667_Cliona_GTGAAA_L001_R2_001.fastq 
 
-#carterio
-cat R1reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r1.trim
-cat R2reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r2.trim
+
 
 #cliona 
 cat R1reads.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 >r1.trim
