@@ -37,10 +37,6 @@ Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     #10,581,948
 
 
 
-
-
-
-
 ######Quality Trimming
 # trimming adaptors and quality filtering
 #removing reads with greater than 9 sequential "As", and removing Truseq adaptors, discarding reads shorter than 50 nucleotides
@@ -51,13 +47,11 @@ cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
 cat Cliona_1_S1_L001_R2_001.fastq > Cliona1-R2.fastq
 
 
-
-
-
-
 #quality filter using fastx_clipper 
 
-#rename target file for naming simplification for each species. Keep both species in separate directories
+
+###### What does this mean??
+######rename target file for naming simplification for each species. Keep both species in separate directories
 export L1_R1reads=STR667_Cliona_GTGAAA_L001_R1_001.fastq 
 export L1_R2reads=STR667_Cliona_GTGAAA_L001_R2_001.fastq 
 
