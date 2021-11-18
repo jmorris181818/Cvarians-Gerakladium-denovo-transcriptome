@@ -27,6 +27,7 @@ grep @A0 Cliona1_R2.trim | wc -l
 
 
 
+
 #Cliona4
 cat Cliona_4_S2_L001_R1_001.fastq > Cliona4-R1.fastq
 cat Cliona_4_S2_L001_R2_001.fastq > Cliona4-R2.fastq
@@ -49,7 +50,6 @@ cat Cliona5-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 5
 
 grep @A0 Cliona5_R1.trim | wc -l
 grep @A0 Cliona5_R2.trim | wc -l
-
 
 
 
@@ -104,7 +104,8 @@ cat Cliona_10_S8_L001_R2_001.fastq > Cliona10-R2.fastq
 cat Cliona10-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona10_R1.trim
 cat Cliona10-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona10_R2.trim
 
-
+grep @A0 Cliona10_R1.trim | wc -l
+grep @A0 Cliona10_R2.trim | wc -l
 
 
 
@@ -118,10 +119,8 @@ cat Cliona_17_S14_L001_R2_001.fastq > Cliona17-R2.fastq
 cat Cliona17-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona17_R1.trim
 cat Cliona17-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona17_R2.trim
 
-
-
-
-
+grep @A0 Cliona17_R1.trim | wc -l
+grep @A0 Cliona17_R2.trim | wc -l
 
 
 
@@ -133,8 +132,8 @@ cat Cliona_21_S18_L001_R2_001.fastq > Cliona21-R2.fastq
 cat Cliona21-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona21_R1.trim
 cat Cliona21-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona21_R2.trim
 
-
-
+grep @A0 Cliona21_R1.trim | wc -l
+grep @A0 Cliona21_R2.trim | wc -l
 
 
 
@@ -146,7 +145,8 @@ cat Cliona_22_S19_L001_R2_001.fastq > Cliona22-R2.fastq
 cat Cliona22-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona22_R1.trim
 cat Cliona22-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona22_R2.trim
 
-
+grep @A0 Cliona22_R1.trim | wc -l
+grep @A0 Cliona22_R2.trim | wc -l
 
 
 
@@ -160,7 +160,8 @@ cat Cliona_23_S20_L001_R2_001.fastq > Cliona23-R2.fastq
 cat Cliona23-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona23_R1.trim
 cat Cliona23-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > Cliona23_R2.trim
 
-
+grep @A0 Cliona23_R1.trim | wc -l
+grep @A0 Cliona23_R2.trim | wc -l
 
 
 
@@ -173,9 +174,8 @@ cat Cliona_Redo1_S22_L001_R2_001.fastq > ClionaRe1-R2.fastq
 cat ClionaRe1-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe1_R1.trim
 cat ClionaRe1-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe1_R2.trim
 
-
-
-
+grep @A0 ClionaRe1_R1.trim | wc -l
+grep @A0 ClionaRe1_R2.trim | wc -l
 
 
 
@@ -188,7 +188,8 @@ cat Cliona_Redo2_S21_L001_R2_001.fastq > ClionaRe2-R2.fastq
 cat ClionaRe2-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe2_R1.trim
 cat ClionaRe2-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe2_R2.trim
 
-
+grep @A0 ClionaRe2_R1.trim | wc -l
+grep @A0 ClionaRe2_R2.trim | wc -l
 
 
 
@@ -202,7 +203,8 @@ cat Cliona_Redo3_S5_L001_R2_001.fastq > ClionaRe3-R2.fastq
 cat ClionaRe3-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe3_R1.trim
 cat ClionaRe3-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe3_R2.trim
 
-
+grep @A0 ClionaRe3_R1.trim | wc -l
+grep @A0 ClionaRe3_R2.trim | wc -l
 
 
 
@@ -217,8 +219,8 @@ cat Cliona_Redo4_S9_L001_R2_001.fastq > ClionaRe4-R2.fastq
 cat ClionaRe4-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe4_R1.trim
 cat ClionaRe4-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe4_R2.trim
 
-
-
+grep @A0 ClionaRe4_R1.trim | wc -l
+grep @A0 ClionaRe4_R2.trim | wc -l
 
 
 
@@ -232,7 +234,8 @@ cat Cliona_Redo5_S16_L001_R2_001.fastq > ClionaRe5-R2.fastq
 cat ClionaRe5-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe5_R1.trim
 cat ClionaRe5-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe5_R2.trim
 
-
+grep @A0 ClionaRe5_R1.trim | wc -l
+grep @A0 ClionaRe5_R2.trim | wc -l
 
 
 
@@ -246,7 +249,8 @@ cat Cliona_Redo7_S17_L001_R2_001.fastq > ClionaRe7-R2.fastq
 cat ClionaRe7-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe7_R1.trim
 cat ClionaRe7-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe7_R2.trim
 
-
+grep @A0 ClionaRe7_R1.trim | wc -l
+grep @A0 ClionaRe7_R2.trim | wc -l
 
 
 
@@ -259,7 +263,8 @@ cat Cliona_Redo8_S13_L001_R2_001.fastq > ClionaRe8-R2.fastq
 cat ClionaRe8-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe8_R1.trim
 cat ClionaRe8-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe8_R2.trim
 
-
+grep @A0 ClionaRe8_R1.trim | wc -l
+grep @A0 ClionaRe8_R2.trim | wc -l
 
 
 
@@ -274,7 +279,8 @@ cat Cliona_Redo9_S15_L001_R2_001.fastq > ClionaRe9-R2.fastq
 cat ClionaRe9-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe9_R1.trim
 cat ClionaRe9-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe9_R2.trim
 
-
+grep @A0 ClionaRe9_R1.trim | wc -l
+grep @A0 ClionaRe9_R2.trim | wc -l
 
 
 
@@ -288,7 +294,8 @@ cat Cliona_Redo10_S10_L001_R2_001.fastq > ClionaRe10-R2.fastq
 cat ClionaRe10-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe10_R1.trim
 cat ClionaRe10-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe10_R2.trim
 
-
+grep @A0 ClionaRe10_R1.trim | wc -l
+grep @A0 ClionaRe10_R2.trim | wc -l
 
 
 
@@ -302,7 +309,8 @@ cat Cliona_Redo11_S11_L001_R2_001.fastq > ClionaRe11-R2.fastq
 cat ClionaRe11-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe11_R1.trim
 cat ClionaRe11-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe11_R2.trim
 
-
+grep @A0 ClionaRe11_R1.trim | wc -l
+grep @A0 ClionaRe11_R2.trim | wc -l
 
 
 
@@ -316,7 +324,8 @@ cat Cliona_Redo12_S23_L001_R2_001.fastq > ClionaRe12-R2.fastq
 cat ClionaRe12-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe12_R1.trim
 cat ClionaRe12-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe12_R2.trim
 
-
+grep @A0 ClionaRe12_R1.trim | wc -l
+grep @A0 ClionaRe12_R2.trim | wc -l
 
 
 
@@ -330,5 +339,6 @@ cat Cliona_Redo13_S12_L001_R2_001.fastq > ClionaRe13-R2.fastq
 cat ClionaRe13-R1.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe13_R1.trim
 cat ClionaRe13-R2.fastq | fastx_clipper -a AAAAAAAAA -a TTTTTTTTT -a AGATCGGAA -l 50 -Q33 | fastq_quality_filter -Q33 -q 20 -p 80 > ClionaRe13_R2.trim
 
-
+grep @A0 ClionaRe13_R1.trim | wc -l
+grep @A0 ClionaRe13_R2.trim | wc -l
 
