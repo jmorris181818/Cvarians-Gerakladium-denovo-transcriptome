@@ -1,12 +1,5 @@
-#Unzip fastq files of raw sequences
 gunzip Cliona_*.fastq.gz 
  
-
-#####to count reads you will see an @ line for each read - it will start with some letter designation, just use that, in this case: @A0
-#####then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest. 
-
-cat yourfilename.fastq | grep @A0 | wc -l
-
 #Cliona1
 cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l     
 cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     
