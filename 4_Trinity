@@ -28,3 +28,24 @@ seq_stats.pl Trinity.fasta
 Trinity --seqType fq --max_memory 500G --left Cliona1_R1p_suf1.fastq,Cliona4_R1p_suf1.fastq,Cliona5_R1p_suf1.fastq,Cliona6_R1p_suf1.fastq,Cliona8_R1p_suf1.fastq,Cliona9_R1p_suf1.fastq,Cliona10_R1p_suf1.fastq,Cliona17_R1p_suf1.fastq,Cliona21_R1p_suf1.fastq,Cliona22_R1p_suf1.fastq,Cliona23_R1p_suf1.fastq,ClionaRe1_R1p_suf1.fastq,ClionaRe2_R1p_suf1.fastq,ClionaRe3_R1p_suf1.fastq,ClionaRe4_R1p_suf1.fastq,ClionaRe5_R1p_suf1.fastq,ClionaRe7_R1p_suf1.fastq,ClionaRe8_R1p_suf1.fastq,ClionaRe9_R1p_suf1.fastq,ClionaRe10_R1p_suf1.fastq,ClionaRe11_R1p_suf1.fastq,ClionaRe12_R1p_suf1.fastq,ClionaRe13_R1p_suf1.fastq --right Cliona1_R2p_suf2.fastq,Cliona4_R2p_suf2.fastq,Cliona5_R2p_suf2.fastq,Cliona6_R2p_suf2.fastq,Cliona8_R2p_suf2.fastq,Cliona9_R2p_suf2.fastq,Cliona10_R2p_suf2.fastq,Cliona17_R2p_suf2.fastq,Cliona21_R2p_suf2.fastq,Cliona22_R2p_suf2.fastq,Cliona23_R2p_suf2.fastq,ClionaRe1_R2p_suf2.fastq,ClionaRe2_R2p_suf2.fastq,ClionaRe3_R2p_suf2.fastq,ClionaRe4_R2p_suf2.fastq,ClionaRe5_R2p_suf2.fastq,ClionaRe7_R2p_suf2.fastq,ClionaRe8_R2p_suf2.fastq,ClionaRe9_R2p_suf2.fastq,ClionaRe10_R2p_suf2.fastq,ClionaRe11_R2p_suf2.fastq,ClionaRe12_R2p_suf2.fastq,ClionaRe13_R2p_suf2.fastq --CPU 6 
 
 
+
+
+
+perl /transcriptome_utilities/removesmalls.pl 400 Trinity.fasta > Cli_Trinity-l400.fasta
+
+
+#cliona final 
+#cliona_Trinity-l400.fasta
+#-------------------------
+#225126 sequences.
+#1284 average length.
+#22485 maximum length.
+#400 minimum length.
+#N50 = 1696
+#289.1 Mb altogether (289074034 bp).
+#0 ambiguous Mb. (0 bp, 0%)
+#0 Mb of Ns. (0 bp, 0%)
+#-------------------------
+
+
+
