@@ -162,6 +162,144 @@ perl /annotatingTranscriptomes/rePair.pl ClionaRe1_R1.trim.cat ClionaRe1_R2.trim
 
 
 
+#ClionaRe2
+cat ClionaRe2_R1.trim > ClionaRe2_R1.trim.cat
+cat ClionaRe2_R2.trim > ClionaRe2_R2.trim.cat
+
+grep @A0 ClionaRe2_R1.trim.cat | wc -l
+grep @A0 ClionaRe2_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe2_R1.trim.cat ClionaRe2_R2.trim.cat
+
+
+
+
+
+#ClionaRe3
+cat ClionaRe3_R1.trim > ClionaRe3_R1.trim.cat
+cat ClionaRe3_R2.trim > ClionaRe3_R2.trim.cat
+
+grep @A0 ClionaRe3_R1.trim.cat | wc -l
+grep @A0 ClionaRe3_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe3_R1.trim.cat ClionaRe3_R2.trim.cat
+
+
+
+
+#ClionaRe4
+cat ClionaRe4_R1.trim > ClionaRe4_R1.trim.cat
+cat ClionaRe4_R2.trim > ClionaRe4_R2.trim.cat
+
+grep @A0 ClionaRe4_R1.trim.cat | wc -l
+grep @A0 ClionaRe4_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe4_R1.trim.cat ClionaRe4_R2.trim.cat
+
+
+
+
+
+#ClionaRe5
+cat ClionaRe5_R1.trim > ClionaRe5_R1.trim.cat
+cat ClionaRe5_R2.trim > ClionaRe5_R2.trim.cat
+
+grep @A0 ClionaRe5_R1.trim.cat | wc -l
+grep @A0 ClionaRe5_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe5_R1.trim.cat ClionaRe5_R2.trim.cat
+
+
+
+
+
+#ClionaRe7
+cat ClionaRe7_R1.trim > ClionaRe7_R1.trim.cat
+cat ClionaRe7_R2.trim > ClionaRe7_R2.trim.cat
+
+grep @A0 ClionaRe7_R1.trim.cat | wc -l
+grep @A0 ClionaRe7_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe7_R1.trim.cat ClionaRe7_R2.trim.cat
+
+
+
+
+#ClionaRe8
+cat ClionaRe8_R1.trim > ClionaRe8_R1.trim.cat
+cat ClionaRe8_R2.trim > ClionaRe8_R2.trim.cat
+
+grep @A0 ClionaRe8_R1.trim.cat | wc -l
+grep @A0 ClionaRe8_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe8_R1.trim.cat ClionaRe8_R2.trim.cat
+
+
+
+
+#ClionaRe9
+cat ClionaRe9_R1.trim > ClionaRe9_R1.trim.cat
+cat ClionaRe9_R2.trim > ClionaRe9_R2.trim.cat
+
+grep @A0 ClionaRe9_R1.trim.cat | wc -l
+grep @A0 ClionaRe9_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe9_R1.trim.cat ClionaRe9_R2.trim.cat
+
+
+
+
+
+#ClionaRe10
+cat ClionaRe10_R1.trim > ClionaRe10_R1.trim.cat
+cat ClionaRe10_R2.trim > ClionaRe10_R2.trim.cat
+
+grep @A0 ClionaRe10_R1.trim.cat | wc -l
+grep @A0 ClionaRe10_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe10_R1.trim.cat ClionaRe10_R2.trim.cat
+
+
+
+
+
+#ClionaRe11
+cat ClionaRe11_R1.trim > ClionaRe11_R1.trim.cat
+cat ClionaRe11_R2.trim > ClionaRe11_R2.trim.cat
+
+grep @A0 ClionaRe11_R1.trim.cat | wc -l
+grep @A0 ClionaRe11_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe11_R1.trim.cat ClionaRe11_R2.trim.cat
+
+
+
+
+
+
+#ClionaRe12
+cat ClionaRe12_R1.trim > ClionaRe12_R1.trim.cat
+cat ClionaRe12_R2.trim > ClionaRe12_R2.trim.cat
+
+grep @A0 ClionaRe12_R1.trim.cat | wc -l
+grep @A0 ClionaRe12_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe12_R1.trim.cat ClionaRe12_R2.trim.cat
+
+
+
+
+
+#ClionaRe13
+cat ClionaRe13_R1.trim > ClionaRe13_R1.trim.cat
+cat ClionaRe13_R2.trim > ClionaRe13_R2.trim.cat
+
+grep @A0 ClionaRe13_R1.trim.cat | wc -l
+grep @A0 ClionaRe13_R2.trim.cat | wc -l
+
+perl /annotatingTranscriptomes/rePair.pl ClionaRe13_R1.trim.cat ClionaRe13_R2.trim.cat
+
+
 
 
 
