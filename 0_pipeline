@@ -66,6 +66,19 @@ grep @D8Q r1.trim | wc -l
 grep @D8Q r2.trim | wc -l
 
 
+############## CUTADAPT
+cutadapt -b "G{100}" -o Cliona4-R1-trim1.fastq.gz Cliona4-R1.fastq.gz --cores=8   
+cutadapt -b "G{100}" -o Cliona4-R2-trim1.fastq.gz Cliona4-R2.fastq.gz --cores=8  
+cutadapt -b AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o Cliona4-R1-trim2.fastq.gz Cliona4-R1-trim1.fastq.gz --cores=8
+cutadapt -b AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o Cliona4-R2-trim2.fastq.gz Cliona4-R2-trim1.fastq.gz --cores=8
+cutadapt -b AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o Cliona4-R1-trim3.fastq.gz Cliona4-R1-trim2.fastq.gz --cores=8
+cutadapt -b AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o Cliona4-R2-trim3.fastq.gz Cliona4-R2-trim2.fastq.gz --cores=8
+
+
+
+
+
+
 #make sure that the count has decreased as this is the goal of the trim.
 
 #Trimmed counts for Cliona:
