@@ -13,8 +13,8 @@ grep @A0 Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat | wc -l
 
 perl /annotatingTranscriptomes/dedupTranscriptome.pl left=Cliona1_R1.trim.cat right=Cliona1_R2.trim.cat unp=Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat
 
-cat Cliona1_R1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > Cliona1_R1p_suf1.fastq && cat Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona1_R1p_suf1.fastq
-cat Cliona1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > Cliona1_R2p_suf2.fastq 
+cat Cliona1_R1.trim.cat.dedup | perl -pe 's/^(\@A0.+)$/$1\/1/' > Cliona1_R1p_suf1.fastq && cat Unp_Cliona1_R1.trim.cat_Cliona1_R2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> Cliona1_R1p_suf1.fastq
+cat Cliona1_R2.trim.cat.dedup | perl -pe 's/^(\@A0.+)$/$1\/2/' > Cliona1_R2p_suf2.fastq 
 
 
 
