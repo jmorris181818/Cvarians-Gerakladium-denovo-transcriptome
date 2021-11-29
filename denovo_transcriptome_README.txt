@@ -189,11 +189,19 @@ sbatch concat.slurm
 mkdir cliona
 
 # Trinity
-echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Cliona.fastq --right R2_Cliona.fastq --CPU 20 --max_memory 100G --output cliona_trinity" > trinity
-launcher_creator.py -j trinity -n trinity -q mediumq7 -t 24:00:00 -e studivanms@gmail.com
-sbatch trinity.slurm
+# the python module required by launcher_creator is messing up the steps involving numpy, so we'll do it the old school way
+echo '#!/bin/bash' > trinity.sh
+echo '#SBATCH --partition=mediumq7' >> trinity.sh
+echo '#SBATCH -N 1' >> trinity.sh
+echo '#SBATCH --exclusive' >> trinity.sh
+echo 'module load python3/3.7.7' >> trinity.sh
+echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Cliona.fastq --right R2_Cliona.fastq --CPU 20 --max_memory 100G --output cliona_trinity" >> trinity.sh
+sbatch -o trinity.o%j -e trinity.e%j trinity.sh
 
-
-echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Pione.fastq --right R2_Pione.fastq --CPU 20 --max_memory 100G --output pione_trinity" > trinity
-launcher_creator.py -j trinity -n trinity -q mediumq7 -t 3-00:00:00 -e studivanms@gmail.com
-sbatch trinity.slurm
+echo '#!/bin/bash' > trinity.sh
+echo '#SBATCH --partition=mediumq7' >> trinity.sh
+echo '#SBATCH -N 1' >> trinity.sh
+echo '#SBATCH --exclusive' >> trinity.sh
+echo 'module load python3/3.7.7' >> trinity.sh
+echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Pione.fastq --right R2_Pione.fastq --CPU 20 --max_memory 100G --output pione_trinity" >> trinity.sh
+sbatch -o trinity.o%j -e trinity.e%j trinity.sh
