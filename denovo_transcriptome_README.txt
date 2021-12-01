@@ -180,8 +180,6 @@ mv *.dedup ../backup/
 # first, concatenate all forward and reverse reads into a single set of fastq files per species
 echo "cat R1_Cliona* > R1_Cliona.fastq" > concat
 echo "cat R2_Cliona* > R2_Cliona.fastq" >> concat
-echo "cat R1_Pione* > R1_Pione.fastq" >> concat
-echo "cat R2_Pione* > R2_Pione.fastq" >> concat
 launcher_creator.py -j concat -n concat -q shortq7 -t 6:00:00 -e studivanms@gmail.com
 sbatch concat.slurm
 
@@ -198,10 +196,39 @@ echo 'module load python3/3.7.7' >> trinity.sh
 echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Cliona.fastq --right R2_Cliona.fastq --CPU 20 --max_memory 100G --output cliona_trinity" >> trinity.sh
 sbatch -o trinity.o%j -e trinity.e%j trinity.sh
 
-echo '#!/bin/bash' > trinity.sh
-echo '#SBATCH --partition=mediumq7' >> trinity.sh
-echo '#SBATCH -N 1' >> trinity.sh
-echo '#SBATCH --exclusive' >> trinity.sh
-echo 'module load python3/3.7.7' >> trinity.sh
-echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Pione.fastq --right R2_Pione.fastq --CPU 20 --max_memory 100G --output pione_trinity" >> trinity.sh
-sbatch -o trinity.o%j -e trinity.e%j trinity.sh
+# If any of the assemblies fail in the chrysalis step, find the output directory for each of the error files and delete them, or move them to your backup directory. They should look like this: "cliona_trinity/read_partitions/Fb_4/CBin_4670/c467359.trinity.reads.fa.out"
+mv cliona_trinity/read_partitions/Fb_4/CBin_4670/c467359.trinity.reads.fa.out cliona_trinity/read_partitions/Fb_3/CBin_3088/c309109.trinity.reads.fa.out cliona_trinity/read_partitions/Fb_3/CBin_3690/c369317.trinity.reads.fa.out cliona_trinity/read_partitions/Fb_3/CBin_3701/c370414.trinity.reads.fa.out temp_backup/.
+
+mv cliona_trinity.Trinity.fasta Cvarians.fasta
+echo "seq_stats.pl Cvarians.fasta > seqstats_Cvarians.txt" > seq_stats
+launcher_creator.py -j seq_stats -n seq_stats -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch seq_stats.slurm
+
+Cvarians.fasta
+-------------------------
+812356 sequences.
+801 average length.
+26720 maximum length.
+182 minimum length.
+N50 = 1343
+650.6 Mb altogether (650572316 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
+-------------------------
+
+
+#------------------------------
+## First cleaning step:
+# Following Kitchen et al. (2015) doi: 10.1534/g3.115.020164
+# Assemblies include many small contigs that are unlikely to provide significant matches, so for analyses based on sequence homology we consider only contigs ≥400 bp.
+Use removesmalls.pl to get rid of contigs < specified length
+
+cd ~/bin
+git clone  https://github.com/drtamermansour/p_asteroides.git
+mv p_asteroides/scripts/removesmalls.pl .
+chmod +x removesmalls.pl
+
+cd ~/annotate/cliona/
+echo "perl ~/bin/removesmalls.pl  400 Cvarians.fasta > Cvarians_l400.fasta" > smalls
+launcher_creator.py -j smalls -n smalls -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch smalls.slurm
