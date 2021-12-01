@@ -116,11 +116,6 @@ grep @D8Q R1_r1.trim.cat | wc -l
 grep @D8Q R2_r2.trim.cat | wc -l
 grep @D8Q Unp_r1.trim.cat_r2.trim.cat | wc -l
 
-###Carterio repaired
-#R1_ 152365270 
-#R2_ 152365270
-#UnPair_ 44629903
-
 
 #R1 and R2 paired counts should be the same. If they are not, then the scratch folder likely ran out of memory. 
 
@@ -179,25 +174,16 @@ seq_stats.pl Trinity.fasta
 
 #########################################################
 
+
+##### 1. Remove contigs <400bp #####
+
 #FIRST cleaning step - according to Kitchen et al. G3 November 1, 2015 vol. 5 no. 11 2441-2452 doi: 10.1534/g3.115.020164
-#Assemblies included many small contigs (on average, 47% were <400 bp) that were unlikely to provide significant matches, so for analyses based on sequence homology we considered only contigs ≥400 bp (average n = 91,792). use removesmalls.pl to get rid of contigs < specified length
+#Assemblies included many small contigs (on average, 47% were <400 bp) that were unlikely to provide significant matches, so for analyses based on sequence homology we considered only contigs ≥400 bp (average n = 91,792). 
+#use removesmalls.pl to get rid of contigs < specified length
 #https://github.com/drtamermansour/p_asteroides/blob/master/scripts/removesmalls.pl
 
 
 perl /transcriptome_utilities/removesmalls.pl 400 Trinity.fasta > Cli_Trinity-l400.fasta
-
-#carterio final
-#carterio_Trinity-l400.fasta
-#-------------------------
-#136510 sequences.
-#1949 average length.
-#26809 maximum length.
-#400 minimum length.
-#N50 = 3399
-##266 Mb altogether (266005490 bp).
-##0 ambiguous Mb. (0 bp, 0%)
-#0 Mb of Ns. (0 bp, 0%)
-#-------------------------
 
 #cliona final 
 #cliona_Trinity-l400.fasta
@@ -212,6 +198,9 @@ perl /transcriptome_utilities/removesmalls.pl 400 Trinity.fasta > Cli_Trinity-l4
 #0 Mb of Ns. (0 bp, 0%)
 #-------------------------
 
+
+
+#### 2. Remove rRNA and mitoRNA ####
 
 #following Kitchen et al, remove reads matching to rRNA and mitoRNA (contamination)
 
