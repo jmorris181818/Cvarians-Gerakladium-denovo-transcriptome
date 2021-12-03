@@ -31,10 +31,14 @@ cd bin
 # clone github repositories
 git clone https://github.com/mstudiva/tag-based_RNAseq.git
 git clone https://github.com/jmorris181818/Cvarians-Gerakladium-denovo-transcriptome.git
+git clone https://github.com/Eli-Meyer/transcriptome_utilities
+git clone https://github.com/Eli-Meyer/sequence_utilities.git
 
 # move files from subdirectories to bin/:
 mv tag-based_RNAseq/* .
 mv Cvarians-Gerakladium-denovo-transcriptome/* .
+mv transcriptome_utilities/* .
+mv sequence_utilities/* .
 
 # remove the tag-based_RNAseq directory
 rm -rf tag-based_RNAseq
@@ -192,6 +196,7 @@ echo '#!/bin/bash' > trinity.sh
 echo '#SBATCH --partition=mediumq7' >> trinity.sh
 echo '#SBATCH -N 1' >> trinity.sh
 echo '#SBATCH --exclusive' >> trinity.sh
+echo '#SBATCH --mem-per-cpu=16000' >> trinity.sh
 echo 'module load python3/3.7.7' >> trinity.sh
 echo "~/bin/trinityrnaseq-v2.13.2/Trinity --seqType fq --left R1_Cliona.fastq --right R2_Cliona.fastq --CPU 20 --max_memory 100G --output cliona_trinity" >> trinity.sh
 sbatch -o trinity.o%j -e trinity.e%j trinity.sh
@@ -218,10 +223,9 @@ N50 = 1343
 
 
 #------------------------------
-## First cleaning step:
-# Following Kitchen et al. (2015) doi: 10.1534/g3.115.020164
+## Removing contigs <400 bp, per Kitchen et al. (2015) doi: 10.1534/g3.115.020164
 # Assemblies include many small contigs that are unlikely to provide significant matches, so for analyses based on sequence homology we consider only contigs ≥400 bp.
-Use removesmalls.pl to get rid of contigs < specified length
+# Use removesmalls.pl to get rid of contigs < specified length
 
 cd ~/bin
 git clone  https://github.com/drtamermansour/p_asteroides.git
@@ -232,3 +236,107 @@ cd ~/annotate/cliona/
 echo "perl ~/bin/removesmalls.pl  400 Cvarians.fasta > Cvarians_l400.fasta" > smalls
 launcher_creator.py -j smalls -n smalls -q shortq7 -t 6:00:00 -e studivanms@gmail.com
 sbatch smalls.slurm
+
+Cvarians_l400.fasta
+-------------------------
+436654 sequences.
+1244 average length.
+26720 maximum length.
+400 minimum length.
+N50 = 1717
+543.4 Mb altogether (543381748 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
+-------------------------
+
+
+#------------------------------
+## Removing reads matching to rRNA and mitoRNA (contamination)
+
+# Downloading reference data
+# Ribosomal RNA
+# Go to https://www.arb-silva.de/search/ and search for your species; if it's not available, pick a related species
+# Add it to your cart using the checkbox on the left, then select Download in the top right
+# Choose FASTA without gaps, and tar.gz
+# Cliona varians is available in this GitHub repo as 'arb-silva.de_2021-12-01_id1089989'
+# Originally from Redmond et al. (2013) doi: 10.1093/icb/ict078
+cp ~/bin/arb-silva.de_2021-12-01_id1089989.tgz .
+tar -vxf arb-silva.de_2021-12-01_id1089989.tgz
+
+# Mitochondrial RNA
+# Cliona varians is available in this GitHub repo as 'Cvarians_mitoRNA'
+# Originally from Plese et al. (2021) doi: 10.1016/j.ympev.2020.107011
+cp ~/bin/Cvarians_mitoRNA.fasta .
+
+echo "perl ~/bin/RemoveContamSeq_blast+.pl type=blastn score=45 reads=Cvarians_l400.fasta contam=rRNA,arb-silva.de_2021-12-01_id1089989_tax_silva.fasta contam=Mt,Cvarians_mitoRNA.fasta table=Cvarians_contamination.txt passed=Cvarians_clean.fasta" > contam
+launcher_creator.py -j contam -n contam -q mediumq7 -t 24:00:00 -e studivanms@gmail.com
+sbatch contam.slurm
+
+Cvarians_clean.fasta
+-------------------------
+436654 sequences in input file
+0 sequences look like contaminants
+        rRNA    0
+        Mt	0
+436654 sequences passed all tests
+-------------------------
+
+
+#------------------------------
+## Identify the most likely origin of each sequence by comparison to a protein DB from a single close relative and one or more databases of likely contaminants
+# NOTE: before running blast, must shorten fasta headers to avoid error messages in blast output - try this fix: 'sed -e 's/>* .*$//' original.fasta > truncated.fasta'
+
+sed -e 's/>* .*$//' Cvarians_clean.fasta > Cvarians_trunc.fasta
+
+# Only one complete sponge genome is available through Uniprot (Amphimedon queenslandica)
+wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/UP000007879/UP000007879_400682.fasta.gz
+
+# Closest zoox relative is Symbiodinium microadriaticum
+wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/UP000186817/UP000186817_2951.fasta.gz
+
+gunzip *.gz &
+mv UP000007879_400682.fasta Aqueenslandica.fasta
+mv UP000186817_2951.fasta Smicroadriaticum.fasta
+
+cat Aqueenslandica.fasta| grep '>' | wc -l
+# 43437 -matches number in Uniprot
+cat Smicroadriaticum.fasta| grep '>' | wc -l
+# 43269 -matches number in Uniprot
+
+# Truncate databases
+sed -e 's/>* .*$//' Aqueenslandica.fasta > Aqueenslandica_trunc.fasta
+sed -e 's/>* .*$//' Smicroadriaticum.fasta > Smicroadriaticum_trunc.fasta
+
+# Making a blast database for each reference
+echo "makeblastdb -in Aqueenslandica_trunc.fasta -dbtype prot" >mdb
+echo "makeblastdb -in Smicroadriaticum_trunc.fasta -dbtype prot" >>mdb
+launcher_creator.py -j mdb -n mdb -q shortq7 -t 6:00:00 -e email@gmail.com
+sbatch mdb.slurm
+
+# Running the modified perl script to blast against reference proteomes
+echo "perl ~/bin/CompareContamSeq_blast+.pl -q Cvarians_clean.fasta -s 45 -t Aqueenslandica_trunc.fasta -c Smicroadriaticum_trunc.fasta" > origin
+launcher_creator.py -j origin -n origin -q mediumq7 -t 24:00:00 -e studivanms@gmail.com
+sbatch origin.slurm
+
+436654 sequences input.
+137973 of these matched Aqueenslandica_trunc.fasta more closely than any contaminants.
+81578 matched contaminants more closely than Aqueenslandica_trunc.fasta.
+217103 matched none of the supplied DB (nomatch.screened.fasta).
+
+
+#------------------------------
+## Determine most likely source for each adig sequence in transcriptome based on taxonomic ID of each sequence's best match in NCBI's nr database
+# NOTE: nr database and taxdump files downloaded 2 December 2021
+
+mkdir ~/annotate/ncbi/nr
+cd ~/annotate/ncbi/nr
+
+srun wget 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/nr.*.tar.gz'
+ls *.gz | perl -pe 's/(\S+)/tar -zxvf  $1/' > unz
+launcher_creator.py -j unz -n unz -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch --mem=200GB unz.slurm
+
+
+cd ~/annotate/ncbi
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
+tar -zxvf taxdump.tar.gz
