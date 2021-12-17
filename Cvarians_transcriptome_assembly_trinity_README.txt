@@ -1,5 +1,5 @@
-## De novo transcriptome assembly  pipeline, version November 24, 2021
-# Adapted by Michael Studivan (studivanms@gmail.com) and John Morris (john.morris@noaa.gov) based on repos by Misha Matz (https://github.com/z0on/annotatingTranscriptomes.git) and Brian Strehlow (https://github.com/bstrehlow/Transcriptome_assembly.git) for use on the FAU KoKo HPC
+## De novo transcriptome assembly pipeline for the sponge Cliona varians, version December 13, 2021
+# Adapted by Michael Studivan (studivanms@gmail.com) and John Morris (john.morris@noaa.gov) based on repos by Misha Matz (https://github.com/z0on/annotatingTranscriptomes.git), Eli Meyer (https://github.com/Eli-Meyer/sequence_utilities.git; https://github.com/Eli-Meyer/transcriptome_utilities.git), and  Brian Strehlow (https://github.com/bstrehlow/Transcriptome_assembly.git) for use on the FAU KoKo HPC
 
 
 #------------------------------
@@ -16,7 +16,7 @@ ssh mstudiva@koko-login.hpc.fau.edu
 
 
 #------------------------------
-## Installing RNA-seq scripts and setting up the workspace
+## Installing scripts and setting up the workspace
 
 # switch to home directory
 cd
@@ -29,19 +29,16 @@ mkdir bin
 cd bin
 
 # clone github repositories
-git clone https://github.com/mstudiva/tag-based_RNAseq.git
 git clone https://github.com/jmorris181818/Cvarians-Gerakladium-denovo-transcriptome.git
-git clone https://github.com/Eli-Meyer/transcriptome_utilities
-git clone https://github.com/Eli-Meyer/sequence_utilities.git
+git clone https://github.com/mstudiva/annotatingTranscriptomes.git
+git clone https://github.com/mstudiva/tag-based_RNAseq.git
+git clone https://github.com/hrivera28/Oculina_arbuscula_transcriptome.git
 
 # move files from subdirectories to bin/:
-mv tag-based_RNAseq/* .
 mv Cvarians-Gerakladium-denovo-transcriptome/* .
-mv transcriptome_utilities/* .
-mv sequence_utilities/* .
-
-# remove the tag-based_RNAseq directory
-rm -rf tag-based_RNAseq
+mv annotatingTranscriptomes/* .
+mv tag-based_RNAseq/* .
+mv Oculina_arbuscula_transcriptome/Sarahs_scripts/* .
 
 chmod +x ~/bin/bs
 
@@ -70,22 +67,14 @@ make install
 sftp morris_6888@dnaseq2.igsp.duke.edu
 get -r Morris2_6888_210518B6
 
-## Get reference transcriptomes for de novo assembly (from Strehlow et al. 2021 Coral Reefs)
-cd ~/annotate
-mkdir cliona
-wget -O Corientalis.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AADDRhtZApoJXZH7Nuv4GUYua/Cliona%20orientalis/cliona_transcriptome_with_names.fasta
-
-cd ~/annotate
-mkdir symG
-wget -O Gendoclionum.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AACJrbfXnp2f11XgaIjGPb8Aa/Symbiodinium%20endoclionum/symbio_transcriptome_with_names.fasta
 
 #------------------------------
 ## Unzipping reads with a launcher_creator script
 
 # creating and launching a cluster job to unzip all files:
- ls *.gz | perl -pe 's/(\S+)/gunzip $1/' > gunz
- launcher_creator.py -j gunz -n gunz -q shortq7 -t 6:00:00 -e studivanms@gmail.com
- sbatch --mem=200GB gunz.slurm
+ls *.gz | perl -pe 's/(\S+)/gunzip $1/' > gunz
+launcher_creator.py -j gunz -n gunz -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch --mem=200GB gunz.slurm
 
 # look at the reads:
 # head -50 SampleName.fastq
@@ -204,12 +193,12 @@ sbatch -o trinity.o%j -e trinity.e%j trinity.sh
 # If any of the assemblies fail in the chrysalis step, find the output directory for each of the error files and delete them, or move them to your backup directory. They should look like this: "cliona_trinity/read_partitions/Fb_4/CBin_4670/c467359.trinity.reads.fa.out"
 mv cliona_trinity/read_partitions/Fb_4/CBin_4670/c467359.trinity.reads.fa.out cliona_trinity/read_partitions/Fb_3/CBin_3088/c309109.trinity.reads.fa.out cliona_trinity/read_partitions/Fb_3/CBin_3690/c369317.trinity.reads.fa.out cliona_trinity/read_partitions/Fb_3/CBin_3701/c370414.trinity.reads.fa.out temp_backup/.
 
-mv cliona_trinity.Trinity.fasta Cvarians.fasta
-echo "seq_stats.pl Cvarians.fasta > seqstats_Cvarians.txt" > seq_stats
+mv cliona_trinity.Trinity.fasta Cvarians_Trinity.fasta
+echo "seq_stats.pl Cvarians_Trinity.fasta > seqstats_Cvarians_Trinity.txt" > seq_stats
 launcher_creator.py -j seq_stats -n seq_stats -q shortq7 -t 6:00:00 -e studivanms@gmail.com
 sbatch seq_stats.slurm
 
-Cvarians.fasta
+Cvarians_Trinity.fasta
 -------------------------
 812356 sequences.
 801 average length.
@@ -223,38 +212,42 @@ N50 = 1343
 
 
 #------------------------------
-## Removing contigs <400 bp, per Kitchen et al. (2015) doi: 10.1534/g3.115.020164
-# Assemblies include many small contigs that are unlikely to provide significant matches, so for analyses based on sequence homology we consider only contigs ≥400 bp.
-# Use removesmalls.pl to get rid of contigs < specified length
+## First cleaning step:
+# Assemblies include many small contigs that are unlikely to provide significant matches, so for analyses based on sequence homology we consider only contigs ≥500 bp.
 
-cd ~/bin
-git clone  https://github.com/drtamermansour/p_asteroides.git
-mv p_asteroides/scripts/removesmalls.pl .
-chmod +x removesmalls.pl
+echo "perl ~/bin/noshorts.pl Cvarians_Trinity.fasta 500" > noshorts
+launcher_creator.py -j noshorts -n noshorts -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch noshorts.slurm
 
-cd ~/annotate/cliona/
-echo "perl ~/bin/removesmalls.pl  400 Cvarians.fasta > Cvarians_l400.fasta" > smalls
-launcher_creator.py -j smalls -n smalls -q shortq7 -t 6:00:00 -e studivanms@gmail.com
-sbatch smalls.slurm
+echo "seq_stats.pl noshorts_Cvarians_Trinity.fasta > seqstats_noshorts_Cvarians_Trinity.txt" > seq_stats2
+launcher_creator.py -j seq_stats2 -n seq_stats2 -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch seq_stats2.slurm
 
-Cvarians_l400.fasta
+noshorts_Cvarians_Trinity.fasta
 -------------------------
-436654 sequences.
-1244 average length.
+346223 sequences.
+1453 average length.
 26720 maximum length.
-400 minimum length.
-N50 = 1717
-543.4 Mb altogether (543381748 bp).
+500 minimum length.
+N50 = 1873
+503.1 Mb altogether (503073528 bp).
 0 ambiguous Mb. (0 bp, 0%)
 0 Mb of Ns. (0 bp, 0%)
 -------------------------
 
 
 #------------------------------
-## Removing reads matching to rRNA and mitoRNA (contamination)
+## Second cleaning step:
+Remove ribosomal/mitochondrial contaminants using SILVA and NCBI databases and available references for the target species
 
-# Downloading reference data
-# Ribosomal RNA
+# ribosomal RNA, including microbial sequences
+# Go to https://www.arb-silva.de/no_cache/download/archive/current/Exports/ and copy the links for the LSURef_NR99 and SSURef_NR99 compressed fasta files
+# wget https://www.arb-silva.de/fileadmin/silva_databases/current/Exports/SILVA_138.1_LSURef_NR99_tax_silva.fasta.gz
+# wget https://www.arb-silva.de/fileadmin/silva_databases/current/Exports/SILVA_138.1_SSURef_NR99_tax_silva.fasta.gz
+# gunzip *.gz
+# Concatenate both into a single fasta file for blasting
+# cat SILVA_138.1_LSURef_NR99_tax_silva.fasta SILVA_138.1_SSURef_NR99_tax_silva.fasta > SILVA_SSU_LSU_combined.fasta
+
 # Go to https://www.arb-silva.de/search/ and search for your species; if it's not available, pick a related species
 # Add it to your cart using the checkbox on the left, then select Download in the top right
 # Choose FASTA without gaps, and tar.gz
@@ -263,22 +256,43 @@ N50 = 1717
 cp ~/bin/arb-silva.de_2021-12-01_id1089989.tgz .
 tar -vxf arb-silva.de_2021-12-01_id1089989.tgz
 
-# Mitochondrial RNA
-# Cliona varians is available in this GitHub repo as 'Cvarians_mitoRNA'
+# mitochondrial RNA
+# Closest relative available (Cliona varians) is available in this GitHub repo as 'Cvarians_mitoRNA'
 # Originally from Plese et al. (2021) doi: 10.1016/j.ympev.2020.107011
 cp ~/bin/Cvarians_mitoRNA.fasta .
 
-echo "perl ~/bin/RemoveContamSeq_blast+.pl type=blastn score=45 reads=Cvarians_l400.fasta contam=rRNA,arb-silva.de_2021-12-01_id1089989_tax_silva.fasta contam=Mt,Cvarians_mitoRNA.fasta table=Cvarians_contamination.txt passed=Cvarians_clean.fasta" > contam
+# Running a perl script that blasts the transcriptome against inputted contamination sequences to generate a final, clean transcriptome
+echo "perl ~/bin/RemoveContamSeq_blast+.pl type=blastn score=45 reads=noshorts_Cvarians_Trinity.fasta contam=rRNA,arb-silva.de_2021-12-01_id1089989_tax_silva.fasta contam=Mt,Cvarians_mitoRNA.fasta table=Cvarians_contamination.txt passed=Cvarians.fasta" > contam
 launcher_creator.py -j contam -n contam -q mediumq7 -t 24:00:00 -e studivanms@gmail.com
 sbatch contam.slurm
 
-Cvarians_clean.fasta
+Cvarians.fasta
 -------------------------
-436654 sequences in input file
-0 sequences look like contaminants
-        rRNA    0
-        Mt	0
-436654 sequences passed all tests
+346223 sequences in input file
+300 sequences look like contaminants
+	rRNA	223
+	Mt	77
+345923 sequences passed all tests
+-------------------------
+
+echo "seq_stats.pl Cvarians.fasta > seqstats_Cvarians.txt" > seq_stats3
+launcher_creator.py -j seq_stats3 -n seq_stats3 -q shortq7 -t 6:00:00 -e studivanms@gmail.com
+sbatch seq_stats3.slurm
+
+
+#------------------------------
+## Final assembly, proceed with separation of host/symbiont contigs below
+
+Cvarians.fasta
+-------------------------
+345923 sequences.
+1453 average length.
+26720 maximum length.
+500 minimum length.
+N50 = 1874
+502.7 Mb altogether (502749784 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
 -------------------------
 
 
@@ -286,7 +300,7 @@ Cvarians_clean.fasta
 ## Identify the most likely origin of each sequence by comparison to a protein DB from a single close relative and one or more databases of likely contaminants
 # NOTE: before running blast, must shorten fasta headers to avoid error messages in blast output - try this fix: 'sed -e 's/>* .*$//' original.fasta > truncated.fasta'
 
-sed -e 's/>* .*$//' Cvarians_clean.fasta > Cvarians_trunc.fasta
+sed -e 's/>* .*$//' Cvarians.fasta > Cvarians_trunc.fasta
 
 # Only one complete sponge genome is available through Uniprot (Amphimedon queenslandica)
 wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/UP000007879/UP000007879_400682.fasta.gz
@@ -318,25 +332,24 @@ echo "perl ~/bin/CompareContamSeq_blast+.pl -q Cvarians_clean.fasta -s 45 -t Aqu
 launcher_creator.py -j origin -n origin -q mediumq7 -t 24:00:00 -e studivanms@gmail.com
 sbatch origin.slurm
 
-436654 sequences input.
+345923 sequences input.
 137973 of these matched Aqueenslandica_trunc.fasta more closely than any contaminants.
 81578 matched contaminants more closely than Aqueenslandica_trunc.fasta.
 217103 matched none of the supplied DB (nomatch.screened.fasta).
 
 
-#------------------------------
-## Determine most likely source for each adig sequence in transcriptome based on taxonomic ID of each sequence's best match in NCBI's nr database
-# NOTE: nr database and taxdump files downloaded 2 December 2021
-
-mkdir ~/annotate/ncbi/nr
-cd ~/annotate/ncbi/nr
-
-srun wget 'ftp://ftp.ncbi.nlm.nih.gov/blast/db/nr.*.tar.gz'
-ls *.gz | perl -pe 's/(\S+)/tar -zxvf  $1/' > unz
-launcher_creator.py -j unz -n unz -q shortq7 -t 6:00:00 -e studivanms@gmail.com
-sbatch --mem=200GB unz.slurm
 
 
-cd ~/annotate/ncbi
-wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
-tar -zxvf taxdump.tar.gz
+
+
+
+## Get reference transcriptomes for de novo assembly (from Strehlow et al. 2021 Coral Reefs)
+cd ~/annotate
+mkdir cliona
+wget -O Corientalis.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AADDRhtZApoJXZH7Nuv4GUYua/Cliona%20orientalis/cliona_transcriptome_with_names.fasta
+
+cd ~/annotate
+mkdir symG
+wget -O Gendoclionum.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AACJrbfXnp2f11XgaIjGPb8Aa/Symbiodinium%20endoclionum/symbio_transcriptome_with_names.fasta
+
+# Now follow the script 'Cvarians_transcriptome_annotation_README' for generating annotation files for differential expression analysis
