@@ -11,25 +11,25 @@ git clone https://github.com/Eli-Meyer/transcriptome_utilities
 #Trancriptome pre-processing:
 ##Determine Original raw reads generated per Species
 
-#copy zipped files to scratch folder 
+#copy zipped files to scratch folder
 
 #Unzip fastq files of raw sequences
-gunzip Cliona_*.fastq.gz 
- 
+gunzip Cliona_*.fastq.gz
+
 
 #to count reads you will see an @ line for each read - it will start with some letter designation, just use that, in this case: @A0
-#then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest. 
+#then the cat - grep - wc pipe line should tell you the number of reads in each of the files of interest.
 
 cat yourfilename.fastq | grep @A0 | wc -l
 
-Ex) cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l    
-Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l     
+Ex) cat Cliona_1_S1_L001_R1_001.fastq | grep @A0 | wc -l
+Ex) cat Cliona_1_S1_L001_R2_001.fastq | grep @A0 | wc -l
 
 #####Cliona - 10,581,948 (R1); 10,581,948 (R2)
 
 
 #############Do we need to do this individually for each sample ID????
-#Cliona1 
+#Cliona1
 #R1: #10,581,948
 #R2: #10,581,948
 
@@ -47,13 +47,13 @@ cat Cliona_1_S1_L001_R1_001.fastq > Cliona1-R1.fastq
 cat Cliona_1_S1_L001_R2_001.fastq > Cliona1-R2.fastq
 
 
-#quality filter using fastx_clipper 
+#quality filter using fastx_clipper
 
 
 ###### What does this mean??
 ######rename target file for naming simplification for each species. Keep both species in separate directories
-export L1_R1reads=STR667_Cliona_GTGAAA_L001_R1_001.fastq 
-export L1_R2reads=STR667_Cliona_GTGAAA_L001_R2_001.fastq 
+export L1_R1reads=STR667_Cliona_GTGAAA_L001_R1_001.fastq
+export L1_R2reads=STR667_Cliona_GTGAAA_L001_R2_001.fastq
 
 
 
@@ -67,8 +67,8 @@ grep @D8Q r2.trim | wc -l
 
 
 ############## CUTADAPT
-cutadapt -b "G{100}" -o Cliona4-R1-trim1.fastq.gz Cliona4-R1.fastq.gz --cores=8   
-cutadapt -b "G{100}" -o Cliona4-R2-trim1.fastq.gz Cliona4-R2.fastq.gz --cores=8  
+cutadapt -b "G{100}" -o Cliona4-R1-trim1.fastq.gz Cliona4-R1.fastq.gz --cores=8
+cutadapt -b "G{100}" -o Cliona4-R2-trim1.fastq.gz Cliona4-R2.fastq.gz --cores=8
 cutadapt -b AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o Cliona4-R1-trim2.fastq.gz Cliona4-R1-trim1.fastq.gz --cores=8
 cutadapt -b AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o Cliona4-R2-trim2.fastq.gz Cliona4-R2-trim1.fastq.gz --cores=8
 cutadapt -b AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o Cliona4-R1-trim3.fastq.gz Cliona4-R1-trim2.fastq.gz --cores=8
@@ -104,7 +104,7 @@ cutadapt -b AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o Cliona4-R2-trim3.fastq.gz Clion
 ######Cliona R2.cat - 158694359
 
 ########## Re-pairing sequences:
-# At this point you may have to make more space in your working directory as each step nearly doubles the data. 
+# At this point you may have to make more space in your working directory as each step nearly doubles the data.
 
 perl /annotatingTranscriptomes/rePair.pl r1.trim.cat r2.trim.cat
 
@@ -117,10 +117,10 @@ grep @D8Q R2_r2.trim.cat | wc -l
 grep @D8Q Unp_r1.trim.cat_r2.trim.cat | wc -l
 
 
-#R1 and R2 paired counts should be the same. If they are not, then the scratch folder likely ran out of memory. 
+#R1 and R2 paired counts should be the same. If they are not, then the scratch folder likely ran out of memory.
 
 #Repaired counts for Cliona:
-#R1_Cliona 133644264 
+#R1_Cliona 133644264
 #R2_Cliona 133644264
 #UnPair_Cliona 62605944
 
@@ -143,12 +143,12 @@ perl /annotatingTranscriptomes/dedupTranscriptome.pl left=R1_r1.trim.cat right=R
 ##### putting reads together with suffixes /1 (for left and unpaired ones) and /2 for right reads: labs.job
 
 cat R1_r1.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' > R1p_suf1.fastq && cat Unp_r1.trim.cat_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/1/' >> R1p_suf1.fastq
-cat R2_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > R2p_suf2.fastq 
+cat R2_r2.trim.cat.dedup | perl -pe 's/^(\@D8Q.+)$/$1\/2/' > R2p_suf2.fastq
 
 ###########
-#Transcriptome assembly using Trinity 
+#Transcriptome assembly using Trinity
 
-#can increase CPU number with computing availability 
+#can increase CPU number with computing availability
 
 Trinity --seqType fq --max_memory 25G --left R1p_suf1.fastq --right R2p_suf2.fastq --CPU 6
 
@@ -178,14 +178,14 @@ seq_stats.pl Trinity.fasta
 ##### 1. Remove contigs <400bp #####
 
 #FIRST cleaning step - according to Kitchen et al. G3 November 1, 2015 vol. 5 no. 11 2441-2452 doi: 10.1534/g3.115.020164
-#Assemblies included many small contigs (on average, 47% were <400 bp) that were unlikely to provide significant matches, so for analyses based on sequence homology we considered only contigs ≥400 bp (average n = 91,792). 
+#Assemblies included many small contigs (on average, 47% were <400 bp) that were unlikely to provide significant matches, so for analyses based on sequence homology we considered only contigs ≥400 bp (average n = 91,792).
 #use removesmalls.pl to get rid of contigs < specified length
 #https://github.com/drtamermansour/p_asteroides/blob/master/scripts/removesmalls.pl
 
 
 perl /transcriptome_utilities/removesmalls.pl 400 Trinity.fasta > Cli_Trinity-l400.fasta
 
-#cliona final 
+#cliona final
 #cliona_Trinity-l400.fasta
 #-------------------------
 #225126 sequences.
@@ -219,16 +219,16 @@ perl /transcriptome_utilities/removesmalls.pl 400 Trinity.fasta > Cli_Trinity-l4
 
 # also updated invert_seq_ext1.pl, line 1:
 #!/usr/local/bioperl/1.6.924/bin/perl
- /export/scratch/bstrehlo/Sample_STR667_Cliona/scripts/transcriptome_utilities/RemoveContamSeq6.pl 
+ /export/scratch/bstrehlo/Sample_STR667_Cliona/scripts/transcriptome_utilities/RemoveContamSeq6.pl
 
 #also possible:
 #Notes on modifiers for RemoveContamSeq.pl for AIMS HPC - comment out blastall checks #$dep1 ="blastall" ; #next line
 #then where script calls for blastall, replace with legacy_blast before 'blastall' and proper path after -o (/opt/apps/blast/2.2.28/bin):
-#change all blastall to legacy_blast 
+#change all blastall to legacy_blast
 
 ##########
 
-#Download reference data 
+#Download reference data
 #Ribosomal rna
 #arb-silva.de_2019-07-16_id680707.tgz not: this is a newer version than the one above, but it was the top hit and seemed to be the best choice
 #See https://www.arb-silva.de/ for ribosomal dna
@@ -238,7 +238,7 @@ perl /transcriptome_utilities/removesmalls.pl 400 Trinity.fasta > Cli_Trinity-l4
 
 perl RemoveContamSeq6.pl type=blastn score=45 reads=Cli_Trinity-l400.fasta contam=rRNA,aqu_mitochondria_rna.fasta contam=Mito,arb-silva.de_2019-07-16_id680707.fasta table=CliContamsSearch_rRNA_mito.txt passed=Cli_Trinity-l400_NOrRNAmito.fasta
 
-#carterio  roughly the same 
+#carterio  roughly the same
 #136510 sequences in input file
 #70 sequences look like contaminants
 #	Mito	61
@@ -247,9 +247,9 @@ perl RemoveContamSeq6.pl type=blastn score=45 reads=Cli_Trinity-l400.fasta conta
 
 #Removed sequences are found in 'discard.list'
 
-#cliona 
+#cliona
 
-#For Cliona Cli_Trinity-l400.fasta 
+#For Cliona Cli_Trinity-l400.fasta
 #215806 sequences in input file
 #18 sequences look like contaminants
 #	Mito	27
@@ -262,7 +262,7 @@ stats.sh input=transcriptome.fasta
 
 #########################################################
 #Simultaneously Identify the most likely origin of each sequence
-#by comparison with a protein DB from a single close relative, and one or more 
+#by comparison with a protein DB from a single close relative, and one or more
 #databases of likely contaminants. e.g. for sponges, A. queenslandica would be a
 #good target and Symbiodinium would be a likely contaminant for Cliona.
 #Each sequence is assigned to the source which it matches best.
@@ -279,7 +279,7 @@ sed -e 's/>* .*$//' Cli_Trinity-l400_NOrRNAmito.fasta > Cli_Trinity-l400_NOrRNAm
 
 sed -e 's/>* .*$//' Cart_Trinity-l400_NOrRNAmito.fasta > Cart_Trinity-l400_NOrRNAmito-truncated.fasta
 
-#Also get and truncate reference sequences from a. queenslandica. You can comment back in each line for each peace of data. 
+#Also get and truncate reference sequences from a. queenslandica. You can comment back in each line for each peace of data.
 
 #2019 - it seems the degnan website is down, so I got the proteome of queenslandica from Uniprot
 #https://www.uniprot.org/proteomes/UP00000787
@@ -293,10 +293,10 @@ sed -e 's/>* .*$//' Cart_Trinity-l400_NOrRNAmito.fasta > Cart_Trinity-l400_NOrRN
 UP000007879_400682.fasta = aqu_proteins.fasta
 
 cat aqu_proteins.fasta | grep '>' | sed -e 's/>* .*$//' | sort -u | wc -l
-#43435 -matches number in Uniprot 
+#43435 -matches number in Uniprot
 
 cat aqu_proteins.fasta| grep '>' | wc -l
-#43435 -matches number in Uniprot 
+#43435 -matches number in Uniprot
 
 cat Symbiodinium_kawagutii.0819.final.gene.pep | grep '>' | sed -e 's/>* .*$//' | sort -u | wc -l
 #36850
@@ -327,13 +327,13 @@ perl /transcriptome_utilities/CompareContamSeq3.pl Cart_Trinity-l400_NOrRNAmito-
 #cliona
 perl /transcriptome_utilities/CompareContamSeq3.pl Cliona_unstranded_Trinity-l400_NOrRNAmito-truncated.fasta 45 aqu_proteins-truncated.fasta Symbiodinium_kawagutii.0819.final.gene-truncated.pep
 
-#for cliona final 
+#for cliona final
 #225089 sequences input.
 #83752 of these matched aqu_proteins-truncated.fasta more closely than any contaminants.
 #35648 matched contaminants more closely than aqu_proteins-truncated.fasta.
 #105689 matched none of the supplied DB (nomatch.screened.fasta).
 
-#carterio final  
+#carterio final
 #136494 sequences input.
 #67710 of these matched aqu_proteins-truncated.fasta more closely than any contaminants.
 #1520 matched contaminants more closely than aqu_proteins-truncated.fasta.
@@ -345,10 +345,10 @@ perl /transcriptome_utilities/CompareContamSeq3.pl Cliona_unstranded_Trinity-l40
 #NOTE: nr database and taxdump files downloaded 25 August 2016 - into /NCBI in WORK directory
 #blast files are already located on AIMS HPC under /export/databases/NCBI/nr
 
-#carterio 
-update_blastdb --passive nr 
+#carterio
+update_blastdb --passive nr
 
-ls *.gz | time parallel -j+0 tar -zxvf 
+ls *.gz | time parallel -j+0 tar -zxvf
 
 wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 tar -zxvf taxdump.tar.gz
@@ -366,9 +366,9 @@ scp ls strehlow@fe.deic.sdu.dk:/work/sducanfield2/DBdir
 # splitting the transcriptome into 20 chunks to parallelize and/or decrease computing time per chunk
 
 #Carterio - tried with 20 chunks first to do a test
-splitFasta.pl Cart_target.screened.fasta 20 
+splitFasta.pl Cart_target.screened.fasta 20
 
-####cliona final 
+####cliona final
 splitFasta.pl Cliona_final_target.screened.fasta 30
 
 #create list of commands for blasting
@@ -393,7 +393,7 @@ grep "Chordata" AllcontigParseAqu.tab | cut -f 1 > Chordata.tab
 grep "Arthropoda" AllcontigParseAqu.tab | cut -f 1 > Arthropoda.tab
 grep "Actinopteri" AllcontigParseAqu.tab | cut -f 1 > Actinopteri.tab
 
-###for Symbiodiniaceae 
+###for Symbiodiniaceae
 
 grep "Dinoflagellata" AllcontigParseSym.tab | cut -f 1 > Dinoflagellata.tab
 grep "Dinophyceae" AllcontigParseSym.tab | cut -f 1 > Dinophyceae.tab
@@ -411,23 +411,23 @@ cat Dinoflagellata.tab Dinophyceae.tab Suessiales.tab Symbiodiniaceae.tab Chrome
 #Combining 'good' contigs for final transcriptomes
 cat Metazoa.tab Chordata.tab Arthropoda.tab Actinopteri.tab NoNRmatchListAqu.tab > Cliona_Parsed_AllGoodContigs.tab
 
-#check numbers 
+#check numbers
 cat Cliona_Parsed_AllGoodContigs.tab | wc -l
 
 cat Carterio_Parsed_AllGoodContigs.tab | wc -l
 
-#Symbiodinium 
+#Symbiodinium
 cat Symbiodinium_AllGoodContigs.tab | wc -l
 
 #########Ultimately, to sort fasta based on NR blast taxonomic assignments, need list of contig names to be included
 #use samtools, e.g:
 cat Symbiodinium_AllGoodContigs.tab | xargs -n 1 samtools faidx Symbiodinium.fasta > symbio.fasta
 
-#Get stats: 
+#Get stats:
 
 perl seq_stats.pl cliona.fasta
 
-#symbio final 
+#symbio final
 #symbio.fasta
 ##-------------------------
 #28670 sequences.
@@ -441,7 +441,7 @@ perl seq_stats.pl cliona.fasta
 #-------------------------
 
 
-#cliona final 
+#cliona final
 #cliona.fasta
 #-------------------------
 #82895 sequences.
@@ -467,542 +467,3 @@ perl seq_stats.pl cliona.fasta
 #0 ambiguous Mb. (0 bp, 0%)
 #0 Mb of Ns. (0 bp, 0%)
 #-------------------------
-
-
-########## NOW can finally annotate host transcriptomes 
-
-# getting uniprot_swissprot KB database
-wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
-
-# getting annotations (this file is over 3Gb, will take a while)
-wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping_selected.tab.gz
-
-# unzipping
-gunzip uniprot_sprot.fasta.gz &&
-gunzip idmapping_selected.tab.gz 
-
-#split into 20 chunks again
-
-splitFasta.pl carterio.fasta 20 
-
-#cliona final
-
-splitFasta.pl cliona.fasta 20 
-
-#symbio final
-
-#renamed for ease of next scripts
-
-splitFasta.pl cliona.fasta 20 
-
-#swissprotdb.job 
-module load blast+
-
-makeblastdb -in uniprot_sprot.fasta -dbtype prot
-
-#cliona
-ls subset* | perl -pe 's{^(\S+)$}{blastx -query $1 -db /export/scratch/bstrehlo/Sample_STR667_Cliona/uniprot_sprot.fasta -evalue 0.0001 -num_threads 4 -num_descriptions 5 -num_alignments 5 -out $1.br}' > bl
-
-#makes a list of commands for each subset (chunk) of the transcriptome. 
-
-#copy lines from 'bl' to blast each chunk separately
-
-#there should be a way to automate it, but Brian just cut (from a copy of 'bl') and pasted the commands for groups of 10-15 chunks and executed them under this PBS wrapper: 
-
-# combining all blast results into one file
-cat subset*br > myblast.br
-
-#clona final
-cat subset*br > myblast_cliona.br
-
-#symbio
-cat subset*br > myblast_sym.br
-
-#clear some space
-rm subset*
-
-# for trinity-assembled transcriptomes: annotating each contig with isogroup (gene) name in a tabular file and in the fasta file
-
-#carterio
-grep ">" carterio.fasta | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > carterio_seq2iso_corrected.tab
-cat carterio.fasta | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/>$1 gene=isogroup$2/' > carterio_ALL_iso_corrected.fasta
-
-##cliona final 
-grep ">" cliona.fasta | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > cliona_seq2iso_corrected.tab
-cat cliona.fasta | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/>$1 gene=isogroup$2/' > cliona_ALL_iso_corrected.fasta
-
-#symbio final 
-grep ">" symbio.fasta | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > symbio_seq2iso_corrected.tab
-cat symbio.fasta | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/>$1 gene=isogroup$2/' > symbio_ALL_iso_corrected.fasta
-
-#How many isogroups in dataset?
-
-#cliona 
-cat cliona_seq2iso_corrected.tab | cut -f 2 | sort -u | wc -l
-
-#carterio
-
-cat carterio_seq2iso_corrected.tab | cut -f 2 | sort -u | wc -l
-
-#cliona final 
-cat cliona_seq2iso_corrected.tab | cut -f 2 | sort -u | wc -l
-
-#symbio
-cat symbio_seq2iso_corrected.tab | cut -f 2 | sort -u | wc -l
-
-Symbiodinium final - 28670 reads in 21,566 isogroups
-
-Cliona final - 82895 reads in 37344 isogroups 
-
-carterio final - 67304 reads in 15,248 isogroups 
-
-######Annotation using eggNog server
-
-#### extracting coding sequences and corresponding protein translations:
-
-##carterio final, with updated header in pl script as above
-CDS_extractor_v2.pl carterio_ALL_iso_corrected.fasta myblast.br allhits bridgegaps
-
-#added back in isogroups 
-cat carterio_ALL_iso_corrected_PRO.fas | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/>$1 gene=isogroup$2/' > carterio_ALL_iso_corrected_PRO_isos.fas
-
-#Protein coding regions Uploaded here: http://eggnogdb.embl.de/#/app/emapper for annoation
-cliona_ALL_iso_corrected_PRO_isos.fas
-
-#using diamond searches and default options with this protein sequence- took about an hour
-
-###the CDS script did not carry over the isogroups, need to add them back in:
-
-grep ">" carterio_ALL_iso_corrected_CDS.fas | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > carterio_ALL_iso_corrected_CDS_isos.tab
-
-cat carterio_ALL_iso_corrected_CDS.fas | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/>$1 gene=isogroup$2/' > carterio_ALL_iso_corrected_CDS_isos.fas
-
-#Worked!
-
-cat carterio_ALL_iso_corrected_CDS_isos.tab| cut -f 2 | sort -u | wc -l
-
-#carterio - 52839 reads in 13557 isogroups after CDS extraction 
-
-#so corrected protein sequence file 
-cat carterio_ALL_iso_corrected_PRO.fas | perl -pe 's/>(TRINITY_DN(\d+_c\d+_g\d+)\S+)/>$1 gene=isogroup$2/' > carterio_ALL_iso_corrected_PRO_isos.fas
-
-####'extracting GO terms from eggnog annotation'
-
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$6 }' carterio_ALL_iso_corrected_PRO.fas.emapper.annotations | grep GO | perl -pe 's/,/;/g' >carterio_PRO_gene2go.tab
-
-#same as above, but after readding isogroup notation to protein file 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$6 }' carterio_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep GO | perl -pe 's/,/;/g' >carterio_PRO_isos_gene2go.tab
-
-#####carterio final 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$6 }' carterio_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep GO | perl -pe 's/,/;/g' >carterio_gene2go.tab
-
-cat carterio_gene2go.tab | cut -f 1 | sort -u | wc -l
-#####cliona final 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$6 }' cliona_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep GO | perl -pe 's/,/;/g' >cliona_contig2go.tab
-
-cat cliona_contig2go.tab | cut -f 1 | sort -u | wc -l
-
-#####sym final 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$6 }' symbio_ALL_iso_corrected_PRO.fas.emapper.annotations | grep GO | perl -pe 's/,/;/g' >symbio_contig2go.tab
-
-cat symbio_contig2go.tab | cut -f 1 | sort -u | wc -l
-
-##symbio final  6030 contigs have (of 28670) have GO terms 21%
-##carterio final: 32585 contigs (of 67304) have Go terms 48% 
-##cliona fina: 41583 contigs of (of 82895) have go terms 50% 
-
-
-##tried to add in isogroups to tab file and then look count by unqiue isogroups
-cat carterio_gene2go.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > carterio_isos_gene2go.tab
-
-cat cliona_contig2go.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > cliona_isos_contig2go.tab
-
-cat symbio_contig2go.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > symb_isos_contig2go.tab
-
-cat carterio_isos_gene2go.tab | cut -f 2 | sort -u | wc -l
-
-cat cliona_isos_contig2go.tab | cut -f 2 | sort -u | wc -l
-
-cat symb_isos_contig2go.tab | cut -f 2 | sort -u | wc -l
-
-#symbio final 4654 of 21,566 isogroups have GO terms 22% have go terms associated
-#carterio final 6592 (of 15248)  isogroups have GO terms associated (43% ... not very good)
-#cliona final 19740 of 37344 isogroups have go terms associated (52%). Also comparable to the original version made in 2017. So that validates the low results from carterio. Probably gene loss (e.g. loss of silica formation)
-
-
-cat carterio_isos_gene2go.tab | cut -f 3 | sort -u | wc -l
-
-cat cliona_isos_contig2go.tab | cut -f 3 | sort -u | wc -l
-
-#carterio final 5783 unique GO terms in general
-#cliona final 10644 unique GO terms in general
-#build table with only unique isogroups iso2GO 
-
-#below almost works. but makes things unque for both go and iso, but there are still some iso dublicate
-cat carterio_isos_gene2go.tab | cut -f 2,3 | sort -u >carterio_iso2go.tab
-
-#better code for cliona 
-cat  cliona_isos_contig2go.tab | cut -f 2,3  > cliona_iso2go1.tab
-
-#symb final
-cat  symb_isos_contig2go.tab | cut -f 2,3  > symbio_iso2go1.tab
-
-#remove any iso duplicates 
-awk '!seen[$1]++' carterio_iso2go1.tab  > carterio_iso2go_final.tab
-
-awk '!seen[$1]++' cliona_iso2go1.tab  > cliona_iso2go_final.tab
-
-awk '!seen[$1]++' symbio_iso2go1.tab  > symbio_iso2go_final.tab
-
-cat cliona_iso2go_final.tab | wc -l
-
-cat symbio_iso2go_final.tab | wc -l
-
-#Produced file with just unique isogroups and go terms :)
-
-#########  KOG classes (single-letter):
-#carterio final 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$12 }' carterio_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep -Ev "[,#S]" >carterio_contig2kogClass1.tab
-
-#cliona final 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$12 }' cliona_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep -Ev "[,#S]" >cliona_contig2kogClass1.tab
-
-#symbio final 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$12 }' symbio_ALL_iso_corrected_PRO.fas.emapper.annotations | grep -Ev "[,#S]" >symbio_contig2kogClass1.tab
-
-# converting single-letter KOG classes to text understood by KOGMWU package (must have kog_classes.txt file in the same dir):
-awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt carterio_contig2kogClass1.tab > carterio_contig2kogClass2.tab
-
-awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt cliona_contig2kogClass1.tab > cliona_contig2kogClass2.tab
-
-#symbio
-awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt symbio_contig2kogClass1.tab > symbio_contig2kogClass2.tab
-
-#remove blank spaces
-cat carterio_contig2kogClass2.tab | awk '{if ($2!="") print }' > carterio_contig2kogClass_final.tab
-
-cat cliona_contig2kogClass2.tab | awk '{if ($2!="") print }' > cliona_contig2kogClass_final.tab
-
-cat symbio_contig2kogClass2.tab | awk '{if ($2!="") print }' > symbio_contig2kogClass_final.tab
-
-#contig2kogclass 
-cat carterio_contig2kogClass_final.tab | wc -l
-
-cat cliona_contig2kogClass_final.tab | wc -l
-
-cat symbio_contig2kogClass_final.tab | wc -l
-
-#Symbiodinium final - 28670 reads in 21,566 isogroups
-
-#symbio final 8351 contigs have kog class (28670) (29%)
-#carterio final 37488 contigs have kog class (55%)
-#cliona final 48437 contigs have kog class (of 82895, 58%) 
-
-#iso2kog class
-cat carterio_contig2kogClass.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > carterio_with_isos_contig2kogClass.tab
-
-cat cliona_contig2kogClass_final.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > cliona_with_isos_contig2kogClass.tab
-
-cat symbio_contig2kogClass_final.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > symbio_with_isos_contig2kogClass.tab
-
-#take out kogs and isos
-
-cat carterio_with_isos_contig2kogClass.tab | cut -f 2,3  >carterio_iso2kogClass1.tab
-
-cat cliona_with_isos_contig2kogClass.tab | cut -f 2,3  >cliona_iso2kogClass1.tab
-
-cat symbio_with_isos_contig2kogClass.tab | cut -f 2,3  >symbio_iso2kogClass1.tab
-
-#remove duplicate lists of isogroups (they have the same annotations :) )
-
-awk '!seen[$1]++' carterio_iso2kogClass1.tab  > carterio_iso2kogClass_2.tab
-
-awk '!seen[$1]++' cliona_iso2kogClass1.tab  > cliona_iso2kogClass_2.tab
-
-awk '!seen[$1]++' symbio_iso2kogClass1.tab  > symbio_iso2kogClass_2.tab
-
-#still some missing lines. Below keeps only lines with kog annotation  
-
-cat carterio_iso2kogClass_2.tab | awk '{if ($2!="") print }' > carterio_iso2kogClass_final.tab
-
-cat cliona_iso2kogClass_2.tab | awk '{if ($2!="") print }' > cliona_iso2kogClass_final.tab
-
-cat symbio_iso2kogClass_2.tab | awk '{if ($2!="") print }' > symbio_iso2kogClass_final.tab
-
-cat carterio_iso2kogClass_final.tab | wc -l
-
-cat cliona_iso2kogClass_final.tab | wc -l
-
-cat symbio_iso2kogClass_final.tab | wc -l
-
-#symbio final 6309 of 21,566 isogroups have Kog class annotations (29%) 
-
-#carterio final 7819 of 15248 isogroups have Kog class annotations 51%
-
-#clona final 22772 of 37344 isogroups have Kog class annotation 60% :)
-
-cat carterio_iso2kogClass_final.tab | cut -f 2 | sort -u | wc -l
-
-cat cliona_iso2kogClass_final.tab | cut -f 2 | sort -u | wc -l
-
-cat symbio_iso2kogClass_final.tab | cut -f 2 | sort -u | wc -l
-
-
-#Symbiodinium final 23 of 24 Kog annotations present. only missing 'general prediction only' so it is not important as it is only hypothetical
-#carterio final 23 of 24 Kog annotations present. only missing 'general prediction only' so it is not important as it is only hypothetical
-#cliona 23 of 24 Kog annotations present. only missing 'general prediction only' so it is not important as it is only hypothetical
-
-
-###Extract gene names from annotations
-
-#carterio 
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$13 }' carterio_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep -Ev "\tNA" >carterio_contig2geneName.tab
-
-#cliona
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$13 }' cliona_ALL_iso_corrected_PRO_isos.fas.emapper.annotations | grep -Ev "\tNA" >cliona_contig2geneName.tab
-
-#symbio
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$13 }' symbio_ALL_iso_corrected_PRO.fas.emapper.annotations | grep -Ev "\tNA" >symbio_contig2geneName.tab
-
-cat carterio_contig2geneName.tab | wc -l
-
-cat cliona_contig2geneName.tab | wc -l
-
-cat symbio_contig2geneName.tab | wc -l
-
-#symbio final: 11322 of 28670 contigs have gene names (39%)
-
-#carterio final: 48616 of 67304 contigs have gene names (72%)
-
-#Cliona final: 63209 of 82895 contigs have gene names (76%) 
-
-#add in isogroups
-cat carterio_contig2geneName.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > carterio_with_isos_contig2geneName.tab
-
-cat cliona_contig2geneName.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > cliona_with_isos_contig2geneName.tab
-
-cat symbio_contig2geneName.tab | perl -pe 's/(TRINITY_DN(\d+_c\d+_g\d+)\S+)/$1\tisogroup$2/' > symbio_with_isos_contig2geneName.tab
-
-#iso2gene names 
-cat carterio_with_isos_contig2geneName.tab| cut -f 2,3  >carterio_iso2geneName1.tab 
-
-cat cliona_with_isos_contig2geneName.tab| cut -f 2,3  >cliona_iso2geneName1.tab 
-
-cat symbio_with_isos_contig2geneName.tab| cut -f 2,3  >symbio_iso2geneName1.tab 
-
-awk '!seen[$1]++' carterio_iso2geneName1.tab  > carterio_iso2geneName2.tab
-
-awk '!seen[$1]++' cliona_iso2geneName1.tab  > cliona_iso2geneName2.tab
-
-awk '!seen[$1]++' symbio_iso2geneName1.tab  > symbio_iso2geneName2.tab
-
-cat carterio_iso2geneName2.tab | awk '{if ($2!="") print }' > carterio_iso2geneName_final.tab
-
-cat cliona_iso2geneName2.tab | awk '{if ($2!="") print }' > cliona_iso2geneName_final.tab
-
-cat symbio_iso2geneName2.tab | awk '{if ($2!="") print }' > symbio_iso2geneName_final.tab
-
-cat carterio_iso2geneName_final.tab | wc -l
-
-cat cliona_iso2geneName_final.tab | wc -l
-
-cat symbio_iso2geneName_final.tab | wc -l
-
-#symbio final 8449 of 21,566 isogroups have names (39%) of isogroups have names 
-#cartrerio final: 9757 of 15248 isogroups have names 64% of isogroups have names
-#cliona final: 28762 of 37344 isogroups have namges 77% :) comparable to the annotation results for cliona above :) 
-
-#calculating contiguity:Extracting Gene Ontology annotations for GO_MWU:
-#Calculates transcriptome contiguity as per
-#Martin and Wang, Nat Rev Genetics 12, 671-682, 2012:
-#Contiguity is the percentage of transcriptome-matching reference 
-#sequences aligned over [threshold] fraction of their length against 
-#the longest matching contig in the assembly.
-#For example, contiguity of 0.5 at the threshold 0.75 implies that
-#50% of reference sequences that were matched by the transcriptome
-#contigs were aligned over 75% or more of their length against
-#the longest matching contig.
-
-contiguity.pl hits=gach_ALL_iso_hits.tab threshold=0.75
-
-#carterio final
-contiguity.pl hits=carterio_ALL_iso_corrected_hits.tab threshold=0.75
-
-#for carterio contiguity at 0.75 threshold: 0.45
-
-#cliona final 
-
-contiguity.pl hits=cliona_ALL_iso_corrected_hits.tab threshold=0.75
-
-#cliona contiguity at 0.75 threshold: 0.40
-
-#sbymbio
-contiguity.pl hits=symbio_ALL_iso_corrected_hits.tab threshold=0.75
-
-#contiguity at 0.75 threshold: 0.36
-
-
-### Compare transcriptomes to core gene set form korflab: to characterize representation of genes:
-# 248 eukaryotic core gene set from the CEGMA pipeline
-wget http://korflab.ucdavis.edu/Datasets/genome_completeness/core/248.prots.fa.gz
-gunzip 248.prots.fa.gz
-
-makeblastdb -in cliona_ALL_iso_corrected.fasta -dbtype nucl
-
-#carterio_final 
-makeblastdb -in carterio_ALL_iso_corrected.fasta -dbtype nucl
-
-#cliona final
-makeblastdb -in cliona_ALL_iso_corrected.fasta -dbtype nucl
-
-#symb final
-makeblastdb -in symbio_ALL_iso_corrected.fasta -dbtype nucl
-
-#after you make the database, uncomment the script below, and comment out the database making script.
-
-#carterio final
-tblastn -query 248.prots.fa -db carterio_ALL_iso_corrected.fasta -evalue 1e-10 -outfmt "6 qseqid sseqid evalue bitscore qcovs" -max_target_seqs 1 -num_threads 16 >carterio_248.brtab
-
-#cliona final 
-tblastn -query 248.prots.fa -db cliona_ALL_iso_corrected.fasta -evalue 1e-10 -outfmt "6 qseqid sseqid evalue bitscore qcovs" -max_target_seqs 1 -num_threads 16 >cliona_248.brtab
-
-#symb
-tblastn -query 248.prots.fa -db symbio_ALL_iso_corrected.fasta -evalue 1e-10 -outfmt "6 qseqid sseqid evalue bitscore qcovs" -max_target_seqs 1 -num_threads 16 >symbio_248.brtab
-
-cat cliona_248.brtab | perl -pe 's/.+(KOG\d+)\s.+/$1/' | sort -u | wc -l | awk '{print $1/248}'
-
-cat carterio_248.brtab | perl -pe 's/.+(KOG\d+)\s.+/$1/' | sort -u | wc -l | awk '{print $1/248}'
-
-cat symbio_248.brtab | perl -pe 's/.+(KOG\d+)\s.+/$1/' | sort -u | wc -l | awk '{print $1/248}'
-
-#for cartreriospongia foliascens - 97.9% of core Kogs represented
-#cliona final 98.7% or core Kogs
-#symbio - 56% of core Kogs are represented (tracks with busco results and the literature)
-
-#------------------------------
-#### KEGG annotations:
-
-# selecting the longest contig per isogroup:
-fasta2SBH.pl cliona_ALL_iso.fasta >transcriptome_4kegg.fasta
-
-#carterio final 
-fasta2SBH.pl carterio_ALL_iso_corrected.fasta >transcriptome_4kegg.fasta
-
-#cliona final 
-fasta2SBH.pl cliona_ALL_iso_corrected.fasta >transcriptome_4kegg.fasta
-
-#symbio final 
-fasta2SBH.pl symbio_ALL_iso_corrected.fasta >transcriptome_4kegg.fasta
-
-#KEGG.JOB
-
-# scp transcriptome_4kegg.fasta to your laptop
-# use web browser to submit transcriptome_4kegg.fasta file to KEGG's KAAS server ( http://www.genome.jp/kegg/kaas/ )
-# select SBH algorithm, upload nucleotide query, select representative genes for model inverts:
-#cin (ascidian), dme, cel, aqu
-
-# Once it is done, download the 'text' output from KAAS, name it query.ko (default)
-
-
-# selecting only the lines with non-missing annotation:
-cat sym_query.ko | awk '{if ($2!="") print }' > symbio_iso2kegg.tab
-
-cat query.ko | awk '{if ($2!="") print }' > cliona_iso2kegg.tab
-
-cat query.ko | awk '{if ($2!="") print }' > carterio_iso2kegg.tab
-
-# the KEGG mapping result can be explored for completeness of transcriptome in terms of genes found,
-# use 'html' output link from KAAS result page, see how many proteins you have for conserved complexes and pathways,
-# such as ribosome, spliceosome, proteasome etc
-
-#how many unique KEGG annotations?
-cat symbio_iso2kegg.tab | cut -f 2 | sort -u | wc -l
-
-cat cliona_iso2kegg.tab | cut -f 2 | sort -u | wc -l
-cat cliona_iso2kegg.tab | wc -l
-
-cat carterio_iso2kegg.tab | cut -f 2 | sort -u | wc -l
-
-cat sym_iso2kegg.tab | cut -f 2 | sort -u | wc -l
-
-symbio final 2191 unique kegg annotations for 21566 isogroups
-cliona final 5339 unique kegg annotations for 37344 isogroups
-carterio final 3641 unique kegg annotations for 15248 isogroups 
-
-#------------------------------
-# GC content (BBMap package):
-
-stats.sh input=transcriptome.fasta
-
-###carterio final 
-stats.sh in=carterio_ALL_iso_corrected.fasta
-
-#A	C	G	T	N	IUPAC	Other	GC	GC_stdev
-#0.2984	0.2023	0.2001	0.2992	0.0000	0.0000	0.0000	0.4024	0.0329
-
-#cliona final 
-stats.sh in=cliona_ALL_iso_corrected.fasta
-
-#A	C	G	T	N	IUPAC	Other	GC	GC_stdev
-#0.2714	0.2287	0.2265	0.2733	0.0000	0.0000	0.0000	0.4553	0.0589
-
-#symbio final 
-stats.sh in=symbio_ALL_iso_corrected.fasta
-
-#A	C	G	T	N	IUPAC	Other	GC	GC_stdev
-#0.2041	0.2978	0.2926	0.2056	0.0000	0.0000	0.0000	0.5904	0.0403
-
-#ran buscos for both cliona carterio and symbiodinium on gvolante online surver https://gvolante.riken.jp/analysis.html
-#used metazoan subset for sponges and Eukayota ortholog set for symbiodinium
-
-##catertio final 92.8% complete 
-
-#Completeness Assessment Results:
-#Total number of core genes queried	978
-#Number of core genes detected
-#  Complete	908 (92.84%)
-#  Complete + Partial	922 (94.27%)
-#Number of missing core genes	56 (5.73%)
-#Average number of orthologs per core genes	2.38
-#% of detected core genes that have more than 1 ortholog	78.74
-#Scores in BUSCO format	C:92.8%[S:19.7%,D:73.1%],F:1.4%,M:5.8%
-	
-#----------------------------------------
-#cliona final
-#Completeness Assessment Results:
-#Total number of core genes queried	978
-#Number of core genes detected
-#  Complete	921 (94.17%)
-#  Complete + Partial	940 (96.11%)
-#Number of missing core genes	38 (3.89%)
-#Average number of orthologs per core genes	2.16
-#% of detected core genes that have more than 1 ortholog	70.79
-#Scores in BUSCO format	C:94.2%[S:27.5%,D:66.7%],F:1.9%,M:3.9%
-
-
-#----------------------------------------
-#symbiodinium 
-#Completeness Assessment Results:
-#Total number of core genes queried	303
-#Number of core genes detected
-#  Complete	98 (32.34%)
-#  Complete + Partial	114 (37.62%)
-#Number of missing core genes	189 (62.38%)
-#Average number of orthologs per core genes	1.29
-#% of detected core genes that have more than 1 ortholog	19.39
-#Scores in BUSCO format	C:32.4%[S:26.1%,D:6.3%],F:5.3%,M:62.3%
-
-
-######adding in gene names (annotations)to fasta file 
-#carterio
-annotationsPileup.pl fasta=carterio.fasta c2i=carterio_seq2iso_corrected.tab i2gn=carterio_iso2geneName_final.tab >carterio_transcriptome_with_names.fasta
-
-#cliona
-annotationsPileup.pl fasta=cliona.fasta c2i=cliona_seq2iso_corrected.tab i2gn=cliona_iso2geneName_final.tab >cliona_transcriptome_with_names.fasta
-
-#symbio
-annotationsPileup.pl fasta=symbio.fasta c2i=symbio_seq2iso_corrected.tab i2gn=symbio_iso2geneName_final.tab >symbio_transcriptome_with_names.fasta
-
-
-#
-#Congratulations, you made it to the end of my rambling notes... Here is a fish:
