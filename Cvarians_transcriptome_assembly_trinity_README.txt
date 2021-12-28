@@ -281,7 +281,7 @@ sbatch seq_stats3.slurm
 
 
 #------------------------------
-## Final assembly, proceed with separation of host/symbiont contigs below
+## Final assembly!
 
 Cvarians.fasta
 -------------------------
@@ -295,61 +295,4 @@ N50 = 1874
 0 Mb of Ns. (0 bp, 0%)
 -------------------------
 
-
-#------------------------------
-## Identify the most likely origin of each sequence by comparison to a protein DB from a single close relative and one or more databases of likely contaminants
-# NOTE: before running blast, must shorten fasta headers to avoid error messages in blast output - try this fix: 'sed -e 's/>* .*$//' original.fasta > truncated.fasta'
-
-sed -e 's/>* .*$//' Cvarians.fasta > Cvarians_trunc.fasta
-
-# Only one complete sponge genome is available through Uniprot (Amphimedon queenslandica)
-wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/UP000007879/UP000007879_400682.fasta.gz
-
-# Closest zoox relative is Symbiodinium microadriaticum
-wget https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/UP000186817/UP000186817_2951.fasta.gz
-
-gunzip *.gz &
-mv UP000007879_400682.fasta Aqueenslandica.fasta
-mv UP000186817_2951.fasta Smicroadriaticum.fasta
-
-cat Aqueenslandica.fasta| grep '>' | wc -l
-# 43437 -matches number in Uniprot
-cat Smicroadriaticum.fasta| grep '>' | wc -l
-# 43269 -matches number in Uniprot
-
-# Truncate databases
-sed -e 's/>* .*$//' Aqueenslandica.fasta > Aqueenslandica_trunc.fasta
-sed -e 's/>* .*$//' Smicroadriaticum.fasta > Smicroadriaticum_trunc.fasta
-
-# Making a blast database for each reference
-echo "makeblastdb -in Aqueenslandica_trunc.fasta -dbtype prot" >mdb
-echo "makeblastdb -in Smicroadriaticum_trunc.fasta -dbtype prot" >>mdb
-launcher_creator.py -j mdb -n mdb -q shortq7 -t 6:00:00 -e email@gmail.com
-sbatch mdb.slurm
-
-# Running the modified perl script to blast against reference proteomes
-echo "perl ~/bin/CompareContamSeq_blast+.pl -q Cvarians_clean.fasta -s 45 -t Aqueenslandica_trunc.fasta -c Smicroadriaticum_trunc.fasta" > origin
-launcher_creator.py -j origin -n origin -q mediumq7 -t 24:00:00 -e studivanms@gmail.com
-sbatch origin.slurm
-
-345923 sequences input.
-137973 of these matched Aqueenslandica_trunc.fasta more closely than any contaminants.
-81578 matched contaminants more closely than Aqueenslandica_trunc.fasta.
-217103 matched none of the supplied DB (nomatch.screened.fasta).
-
-
-
-
-
-
-
-## Get reference transcriptomes for de novo assembly (from Strehlow et al. 2021 Coral Reefs)
-cd ~/annotate
-mkdir cliona
-wget -O Corientalis.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AADDRhtZApoJXZH7Nuv4GUYua/Cliona%20orientalis/cliona_transcriptome_with_names.fasta
-
-cd ~/annotate
-mkdir symG
-wget -O Gendoclionum.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AACJrbfXnp2f11XgaIjGPb8Aa/Symbiodinium%20endoclionum/symbio_transcriptome_with_names.fasta
-
-# Now follow the script 'Cvarians_transcriptome_annotation_README' for generating annotation files for differential expression analysis
+# Now proceed with separation of host/symbiont contigs in the script 'Cvarians_transcriptome_hostsym_separation_README'
