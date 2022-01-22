@@ -31,9 +31,9 @@ git clone https://github.com/z0on/emapper_to_GOMWU_KOGMWU.git
 mv emapper_to_GOMWU_KOGMWU/* .
 rm -rf emapper_to_GOMWU_KOGMWU
 
-git clone https://github.com/mstudiva/Plampa-denovo-transcriptome.git
-mv Plampa-denovo-transcriptome/* .
-rm -rf Plampa-denovo-transcriptome/
+git clone https://github.com/jmorris181818/Cvarians-Gerakladium-denovo-transcriptome.git
+mv Cvarians-Gerakladium-denovo-transcriptome/* .
+rm -rf Cvarians-Gerakladium-denovo-transcriptome/
 
 # creating backup directory
 mkdir backup
@@ -47,27 +47,40 @@ cd annotate
 #------------------------------
 ## Getting transcriptome
 
-# Pione lampa transcriptome (December 2021)
-wget https://www.dropbox.com/s/qkelwwnm5rjbvvr/Plampa.fasta
+# Cliona varians and Gerakladium transcriptomes (January 2022)
+wget https://www.dropbox.com/s/mjgen7g4qo6s3s8/Cvarians.fasta
+wget https://www.dropbox.com/s/oqxmpttgd5x3u5m/Gerakladium.fasta
 
-# use the stream editor to find and replace all instances of "TRINITY" with "Plampa" in the  transcriptome
-sed -i 's/TRINITY_DN/Plampa/g' Plampa.fasta
+# use the stream editor to find and replace all instances of "TRINITY" with "Cvarians" in the host transcriptome, and with "Gerakladium" in the symbiont
+sed -i 's/TRINITY_DN/Cvarians/g' Cvarians.fasta
+sed -i 's/TRINITY_DN/Gerakladium/g' Gerakladium.fasta
 
 # transcriptome statistics
-echo "seq_stats.pl Plampa.fasta > seqstats_Plampa.txt" > seq_stats
+echo "seq_stats.pl Cvarians.fasta > seqstats_Cvarians.txt" > seq_stats
+echo "seq_stats.pl Gerakladium.fasta > seqstats_Gerakladium.txt" >> seq_stats
 launcher_creator.py -j seq_stats -n seq_stats -q shortq7 -t 6:00:00 -e studivanms@gmail.com
 sbatch seq_stats.slurm
 
-nano seqstats_Plampa.txt
-
-Plampa.fasta
+Cvarians.fasta
 -------------------------
-220471 sequences.
-1261 average length.
-17411 maximum length.
-500 minimum length.
-N50 = 1536
-277.9 Mb altogether (277944908 bp).
+119824 sequences.
+1901 average length.
+26720 maximum length.
+60 minimum length.
+N50 = 2655
+227.8 Mb altogether (227777238 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
+-------------------------
+
+Gerakladium.fasta
+-------------------------
+28670 sequences.
+1375 average length.
+21103 maximum length.
+400 minimum length.
+N50 = 1672
+39.4 Mb altogether (39418006 bp).
 0 ambiguous Mb. (0 bp, 0%)
 0 Mb of Ns. (0 bp, 0%)
 -------------------------
@@ -87,8 +100,9 @@ echo "makeblastdb -in uniprot_sprot.fasta -dbtype prot" >mdb
 launcher_creator.py -j mdb -n mdb -q shortq7 -t 6:00:00 -e studivanms@gmail.com
 sbatch mdb.slurm
 
-# splitting the transcriptome into 200 chunks
-splitFasta.pl Plampa.fasta 200
+# splitting the transcriptomes into 200 chunks
+splitFasta.pl Cvarians.fasta 200
+splitFasta.pl Gerakladium.fasta 200
 
 # blasting all 200 chunks to uniprot in parallel, 4 cores per chunk
 ls subset* | perl -pe 's/^(\S+)$/blastx -query $1 -db uniprot_sprot\.fasta -evalue 0\.0001 -num_threads 4 -num_descriptions 5 -num_alignments 5 -out $1.br/'>bl
@@ -97,7 +111,7 @@ sbatch blast.slurm
 
 # watching progress:
 grep "Query= " subset*.br | wc -l
-# you should end up with the same number of queries as sequences from the seq_stats script (220471 sequences)
+# you should end up with the same number of queries as sequences from the seq_stats script (119824 sequences for Cvarians, 28670 for Gerakladium)
 
 # combining all blast results
 cat subset*br > myblast.br
