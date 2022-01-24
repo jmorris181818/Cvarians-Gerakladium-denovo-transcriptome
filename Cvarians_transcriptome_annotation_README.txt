@@ -1,5 +1,7 @@
-# Transcriptome annotation for the sponge Pione lampa, version December 13, 2021
+# Transcriptome annotation, version January 24, 2022
 # Adapted by Michael Studivan (studivanms@gmail.com) based on a repo by Misha Matz (https://github.com/z0on/annotatingTranscriptomes.git) for use on FAU's HPC (KoKo)
+# for use in generating transcriptome annotation files for the sponge Cliona varians
+# also includes the separation of reads associated with C. varians and algal symbiont Gerakladium transcriptomes
 
 
 #------------------------------
