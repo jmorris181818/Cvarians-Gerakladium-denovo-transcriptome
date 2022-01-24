@@ -1,0 +1,13 @@
+
+noshorts_Cvarians_Trinity.fasta
+-------------------------
+346223 sequences.
+1453 average length.
+26720 maximum length.
+500 minimum length.
+N50 = 1873
+503.1 Mb altogether (503073528 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
+-------------------------
+

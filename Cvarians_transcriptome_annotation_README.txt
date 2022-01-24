@@ -118,13 +118,20 @@ cat subset*br > myblast.br
 mv subset* ~/annotate/backup/
 
 # generating isogroup designations for each contig/component (there can be multiple contigs per isogroup)
-grep ">" Plampa.fasta | perl -pe 's/>Plampa(\d+)(\S+)\s.+/Plampa$1$2\tPlampa$1/'>Plampa_seq2iso.tab
-cat Plampa.fasta | perl -pe 's/>Plampa(\d+)(\S+).+/>Plampa$1$2 gene=Plampa$1/'>Plampa_iso.fasta
+grep ">" Cvarians.fasta | perl -pe 's/>Cvarians(\d+)(\S+)/Cvarians$1$2\tCvarians$1/'>Cvarians_seq2iso.tab
+cat Cvarians.fasta | perl -pe 's/>Cvarians(\d+)(\S+).+/>Cvarians$1$2 gene=Cvarians$1/'>Cvarians_iso.fasta
+
+grep ">" Gerakladium.fasta | perl -pe 's/>Gerakladium(\d+)(\S+)\s.+/Gerakladium$1$2\tGerakladium$1/'>Gerakladium_seq2iso.tab
+cat Gerakladium.fasta | perl -pe 's/>Gerakladium(\d+)(\S+).+/>Gerakladium$1$2 gene=Gerakladium$1/'>Gerakladium_iso.fasta
 
 
 #-------------------------
 ## Extracting coding sequences and corresponding protein translations:
-echo "perl ~/bin/CDS_extractor_v2.pl Plampa_iso.fasta myblast.br allhits bridgegaps" >cds
+echo "perl ~/bin/CDS_extractor_v2.pl Cvarians_iso.fasta myblast.br allhits bridgegaps" >cds
+launcher_creator.py -j cds -n cds -l cddd -t 6:00:00 -q shortq7 -e studivanms@gmail.com
+sbatch cddd
+
+echo "perl ~/bin/CDS_extractor_v2.pl Gerakladium_iso.fasta myblast.br allhits bridgegaps" >cds
 launcher_creator.py -j cds -n cds -l cddd -t 6:00:00 -q shortq7 -e studivanms@gmail.com
 sbatch cddd
 
@@ -132,23 +139,28 @@ sbatch cddd
 #------------------------------
 ## GO annotations
 
-# selecting the longest contig per isogroup (also renames using isogroups based on Plampa  annotations):
-fasta2SBH.pl Plampa_iso_PRO.fas >Plampa_out_PRO.fas
+# selecting the longest contig per isogroup (also renames using isogroups based on annotations):
+fasta2SBH.pl Cvarians_iso_PRO.fas >Cvarians_out_PRO.fas
+
+fasta2SBH.pl Gerakladium_iso_PRO.fas >Gerakladium_out_PRO.fas
 
 # scp your *_out_PRO.fas file to laptop, submit it to http://eggnog-mapper.embl.de
 cd /path/to/local/directory
 scp mstudiva@koko-login.hpc.fau.edu:~/path/to/HPC/directory/*_out_PRO.fas .
 
 # copy link to job ID status and output file, paste it below instead of current link:
-# status: go on web to http://eggnog-mapper.embl.de/job_status?jobname=MM_t9rukmp6
+# status: go on web to
 
 # once it is done, download results to HPC:
-wget http://eggnog-mapper.embl.de/MM_t9rukmp6/out.emapper.annotations
+wget
 
 # GO:
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$10 }' out.emapper.annotations | grep GO | perl -pe 's/,/;/g' >Plampa_iso2go.tab
+awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$10 }' out.emapper.annotations | grep GO | perl -pe 's/,/;/g' >Cvarians_iso2go.tab
 # gene names:
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$8 }' out.emapper.annotations | grep -Ev "\tNA" >Plampa_iso2geneName.tab
+awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$8 }' out.emapper.annotations | grep -Ev "\tNA" >Cvarians_iso2geneName.tab
+
+awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$10 }' out.emapper.annotations | grep GO | perl -pe 's/,/;/g' >Gerakladium_iso2go.tab
+awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$8 }' out.emapper.annotations | grep -Ev "\tNA" >Gerakladium_iso2geneName.tab
 
 
 #------------------------------
@@ -157,29 +169,36 @@ awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$8 }' out.emapper.annotations | grep -Ev
 cp ~/bin/kog_classes.txt .
 
 #  KOG classes (single-letter):
-awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$7 }' out.emapper.annotations | grep -Ev "[,#S]" >Plampa_iso2kogClass1.tab
+awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$7 }' out.emapper.annotations | grep -Ev "[,#S]" >Cvarians_iso2kogClass1.tab
 # converting single-letter KOG classes to text understood by KOGMWU package (must have kog_classes.txt file in the same dir):
-awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt Plampa_iso2kogClass1.tab > Plampa_iso2kogClass.tab
+awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt Cvarians_iso2kogClass1.tab > Cvarians_iso2kogClass.tab
+
+awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$7 }' out.emapper.annotations | grep -Ev "[,#S]" >Gerakladium_iso2kogClass1.tab
+awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt Gerakladium_iso2kogClass1.tab > Gerakladium_iso2kogClass.tab
 
 
 #------------------------------
 ## KEGG annotations
 
 # selecting the longest contig per isogroup:
-srun fasta2SBH.pl Plampa_iso.fasta >Plampa_4kegg.fasta
+srun fasta2SBH.pl Cvarians_iso.fasta >Cvarians_4kegg.fasta
+
+srun fasta2SBH.pl Gerakladium_iso.fasta >Gerakladium_4kegg.fasta
 
 # scp *4kegg.fasta to your laptop
 cd /path/to/local/directory
 scp mstudiva@koko-login.hpc.fau.edu:~/path/to/HPC/directory/*4kegg.fasta .
-# use web browser to submit Plampa_4kegg.fasta file to KEGG's KAAS server http://www.genome.jp/kegg/kaas/
+# use web browser to submit Cvarians_4kegg.fasta file to KEGG's KAAS server http://www.genome.jp/kegg/kaas/
 # select SBH method, upload nucleotide query
-https://www.genome.jp/kaas-bin/kaas_main?mode=user&id=1639448600&key=bZ5qj3k5
+
 
 # Once it is done, download to HPC - it is named query.ko by default
-wget https://www.genome.jp/tools/kaas/files/dl/1639448600/query.ko
+wget
 
 # selecting only the lines with non-missing annotation:
-cat query.ko | awk '{if ($2!="") print }' > Plampa_iso2kegg.tab
+cat query.ko | awk '{if ($2!="") print }' > Cvarians_iso2kegg.tab
+
+cat query.ko | awk '{if ($2!="") print }' > Gerakladium_iso2kegg.tab
 
 # the KEGG mapping result can be explored for completeness of transcriptome in terms of genes found
 # use 'html' output link from KAAS result page, see how many proteins you have for conserved complexes and pathways, such as ribosome, spliceosome, proteasome etc

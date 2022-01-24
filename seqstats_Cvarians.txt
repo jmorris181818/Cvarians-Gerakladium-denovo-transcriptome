@@ -1,0 +1,13 @@
+
+Cvarians.fasta
+-------------------------
+119824 sequences.
+1901 average length.
+26720 maximum length.
+60 minimum length.
+N50 = 2655
+227.8 Mb altogether (227777238 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
+-------------------------
+
