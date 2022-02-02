@@ -144,16 +144,52 @@ N50 = 1672
 0 Mb of Ns. (0 bp, 0%)
 -------------------------
 
-# Now follow the script 'Cvarians_transcriptome_annotation_README' for generating annotation files for differential expression analysis
+
+#------------------------------
+## GC content with BBMap package
+
+scp the transcriptomes to your computer and follow the BBMap installation instructions here: https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/installation-guide/
+
+sh bbmap/stats.sh in=Cvarians.fasta
+A	C	G	T	N	IUPAC	Other	GC	GC_stdev
+0.2706	0.2300	0.2288	0.2706	0.0000	0.0000	0.0000	0.4588	0.0569
+
+sh bbmap/stats.sh in=Gerakladium.fasta
+A	C	G	T	N	IUPAC	Other	GC	GC_stdev
+0.2041	0.2978	0.2926	0.2056	0.0000	0.0000	0.0000	0.5904	0.0403
 
 
 #------------------------------
-## UNUSED, may be needed later
-## Get reference transcriptomes for de novo assembly (from Strehlow et al. 2021 Coral Reefs)
-cd ~/annotate
-mkdir cliona
-wget -O Corientalis.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AADDRhtZApoJXZH7Nuv4GUYua/Cliona%20orientalis/cliona_transcriptome_with_names.fasta
+## Transcriptome completeness with gVolante/BUSCO
 
-cd ~/annotate
-mkdir symG
-wget -O Gendoclionum.fasta https://www.dropbox.com/sh/f74oan1eu32urd0/AACJrbfXnp2f11XgaIjGPb8Aa/Symbiodinium%20endoclionum/symbio_transcriptome_with_names.fasta
+# Upload the transcriptomes to gVolante here: https://gvolante.riken.jp/analysis.html
+# Use a cutoff length of '1', sequence type of 'Coding/transcribed (nucleotide)', ortholog search pipeline of 'BUSCO v5', and ortholog set of 'Metazoa' for host and 'Eukaryota' for symbiont
+
+Cvarians.fasta
+-------------------------
+Completeness Assessment Results:
+	Total # of core genes queried:    954
+	# of core genes detected
+		Complete:    887 (92.98%)
+		Complete + Partial:    904 (94.76%)
+	# of missing core genes:    50 (5.24%)
+	Average # of orthologs per core genes:    4.16
+	% of detected core genes that have more than 1 ortholog:    83.54
+	Scores in BUSCO format:    C:93.0%[S:15.3%,D:77.7%],F:1.8%,M:5.2%,n:954
+-------------------------
+
+Gerakladium.fasta
+-------------------------
+Completeness Assessment Results:
+	Total # of core genes queried:    255
+	# of core genes detected
+		Complete:    47 (18.43%)
+		Complete + Partial:    63 (24.71%)
+	# of missing core genes:    192 (75.29%)
+	Average # of orthologs per core genes:    1.17
+	% of detected core genes that have more than 1 ortholog:    8.51
+	Scores in BUSCO format:    C:18.5%[S:16.9%,D:1.6%],F:6.3%,M:75.2%,n:255
+-------------------------
+
+
+# Now follow the script 'Cvarians_transcriptome_annotation_README' for generating annotation files for differential expression analysis
