@@ -1,0 +1,13 @@
+
+Gerakladium.fasta
+-------------------------
+28670 sequences.
+1375 average length.
+21103 maximum length.
+400 minimum length.
+N50 = 1672
+39.4 Mb altogether (39418006 bp).
+0 ambiguous Mb. (0 bp, 0%)
+0 Mb of Ns. (0 bp, 0%)
+-------------------------
+

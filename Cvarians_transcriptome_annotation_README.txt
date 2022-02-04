@@ -1,4 +1,4 @@
-# Transcriptome annotation, version January 24, 2022
+# Transcriptome annotation, version February 3, 2022
 # Adapted by Michael Studivan (studivanms@gmail.com) based on a repo by Misha Matz (https://github.com/z0on/annotatingTranscriptomes.git) for use on FAU's HPC (KoKo)
 # for use in generating transcriptome annotation files for the sponge Cliona varians
 # also includes the separation of reads associated with C. varians and algal symbiont Gerakladium transcriptomes
@@ -44,6 +44,11 @@ mkdir backup
 cd
 mkdir annotate
 cd annotate
+
+# If working with host/symbiont transcriptomes, remember to create separate directories for each
+# And do each of the species-specific steps in the respective directories
+mkdir cliona
+mkdir symG
 
 
 #------------------------------
@@ -151,10 +156,14 @@ cd /path/to/local/directory
 scp mstudiva@koko-login.hpc.fau.edu:~/path/to/HPC/directory/*_out_PRO.fas .
 
 # copy link to job ID status and output file, paste it below instead of current link:
-# status: go on web to
+# Cvarians status: go on web to http://eggnog-mapper.embl.de/job_status?jobname=MM_5_x1i5b_
+
+# Gerakladium status: go on web to http://eggnog-mapper.embl.de/job_status?jobname=MM_hcpw1mqd
 
 # once it is done, download results to HPC:
-wget
+wget http://eggnog-mapper.embl.de/MM_5_x1i5b_/out.emapper.annotations
+
+wget http://eggnog-mapper.embl.de/MM_hcpw1mqd/out.emapper.annotations
 
 # GO:
 awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$10 }' out.emapper.annotations | grep GO | perl -pe 's/,/;/g' >Cvarians_iso2go.tab
@@ -163,6 +172,10 @@ awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$8 }' out.emapper.annotations | grep -Ev
 
 awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$10 }' out.emapper.annotations | grep GO | perl -pe 's/,/;/g' >Gerakladium_iso2go.tab
 awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$8 }' out.emapper.annotations | grep -Ev "\tNA" >Gerakladium_iso2geneName.tab
+
+# using the stream editor to replace 'isogroup' with 'Gerakladium'
+sed -i 's/isogroup/Gerakladium/g' Gerakladium_iso2go.tab
+sed -i 's/isogroup/Gerakladium/g' Gerakladium_iso2geneName.tab
 
 
 #------------------------------
@@ -177,6 +190,10 @@ awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes
 
 awk -F "\t" 'BEGIN {OFS="\t" }{print $1,$7 }' out.emapper.annotations | grep -Ev "[,#S]" >Gerakladium_iso2kogClass1.tab
 awk 'BEGIN {FS=OFS="\t"} NR==FNR {a[$1] = $2;next} {print $1,a[$2]}' kog_classes.txt Gerakladium_iso2kogClass1.tab > Gerakladium_iso2kogClass.tab
+
+# using the stream editor to replace 'isogroup' with 'Gerakladium'
+sed -i 's/isogroup/Gerakladium/g' Gerakladium_iso2kogClass1.tab
+sed -i 's/isogroup/Gerakladium/g' Gerakladium_iso2kogClass.tab
 
 
 #------------------------------
@@ -193,9 +210,14 @@ scp mstudiva@koko-login.hpc.fau.edu:~/path/to/HPC/directory/*4kegg.fasta .
 # use web browser to submit Cvarians_4kegg.fasta file to KEGG's KAAS server http://www.genome.jp/kegg/kaas/
 # select SBH method, upload nucleotide query
 
+# Cvarians status: https://www.genome.jp/kaas-bin/kaas_main?mode=user&id=1643933241&key=6JojAnPf
+
+# Gerakladium status: https://www.genome.jp/kaas-bin/kaas_main?mode=user&id=1643928758&key=vEIZtnjJ
 
 # Once it is done, download to HPC - it is named query.ko by default
-wget
+wget https://www.genome.jp/tools/kaas/files/dl/1643933241/query.ko
+
+wget https://www.genome.jp/tools/kaas/files/dl/1643928758/query.ko
 
 # selecting only the lines with non-missing annotation:
 cat query.ko | awk '{if ($2!="") print }' > Cvarians_iso2kegg.tab
